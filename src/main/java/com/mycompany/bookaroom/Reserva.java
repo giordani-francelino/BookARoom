@@ -18,6 +18,7 @@
 package com.mycompany.bookaroom;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 /**
@@ -26,27 +27,38 @@ import java.util.Objects;
  */
 public class Reserva {
 
-    private LocalDate horaInicio;
-    private LocalDate horaFim;
+    private LocalDate dataReserva;
+    private LocalTime horaInicio;
+    private LocalTime horaFim;
     private int numeroSala;
     private int codigoPredio;
     private int codigoCampus;
     private String assunto;
 
+    private int efetuadaPor;
+
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
-    public LocalDate getHoraInicio() {
+    public LocalDate getDataReserva() {
+        return dataReserva;
+    }
+
+    public void setDataReserva(LocalDate dataReserva) {
+        this.dataReserva = dataReserva;
+    }
+
+    public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(LocalDate horaInicio) {
+    public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public LocalDate getHoraFim() {
+    public LocalTime getHoraFim() {
         return horaFim;
     }
 
-    public void setHoraFim(LocalDate horaFim) {
+    public void setHoraFim(LocalTime horaFim) {
         this.horaFim = horaFim;
     }
 
@@ -81,14 +93,22 @@ public class Reserva {
     public void setAssunto(String assunto) {
         this.assunto = assunto;
     }
-    //</editor-fold>
-    
-    public void inserirItemEquipamentoReserva(){
-        
-    }   
 
-    public void excluirItemEquipamentoReserva(){
-        
+    public int getEfetuadaPor() {
+        return efetuadaPor;
+    }
+
+    public void setEfetuadaPor(int efetuadaPor) {
+        this.efetuadaPor = efetuadaPor;
+    }
+
+    //</editor-fold>
+    public void inserirItemEquipamentoReserva() {
+
+    }
+
+    public void excluirItemEquipamentoReserva() {
+
     }
 
     @Override
@@ -130,6 +150,5 @@ public class Reserva {
         return hashCode() == obj.hashCode();
 
     }
-    
-    
+
 }

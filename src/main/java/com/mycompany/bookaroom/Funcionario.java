@@ -17,6 +17,9 @@
  */
 package com.mycompany.bookaroom;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  *
  * @author Your Name &lt;francelino at ifnmg&gt;
@@ -53,6 +56,28 @@ public class Funcionario {
     }
 
 //</editor-fold>
+    public boolean efetuaReserva(int codigoPredio, int codigoSala, LocalDate dataEvento,
+            LocalTime horaInicio, LocalTime horaFim) {
+        boolean b = false;
+        SalaReuniao salaReuniao = new SalaReuniao();
+        salaReuniao.setNumero(codigoSala);
+        salaReuniao.setCodigoPredio(codigoPredio);
+        salaReuniao.setCodigoCampus(this.getCodigoCampus());
+        if(!BancoDeDados.consultaSalaReuniao(salaReuniao)){
+            return false;
+        }
+            
+        return b;
+
+    }
+
+    public boolean cancelaReserva(int codigoPredio, int codigoSala, LocalDate dataEvento,
+            LocalTime horaInicio, LocalTime horaFim) {
+        boolean b = false;
+
+        return b;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;

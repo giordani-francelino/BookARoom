@@ -51,13 +51,14 @@ public class BancoDeDados {
                     System.out.println(ex.getMessage());
 
                 }
+//              inclui salas para teste
                 for (int codigoSalaReuniao = 1; codigoSalaReuniao < 11; codigoSalaReuniao++) {
                     SalaReuniao salaReuniao = new SalaReuniao();
                     salaReuniao.setNumero(codigoSalaReuniao);
                     salaReuniao.setCodigoPredio(codigoPredio);
                     salaReuniao.setCodigoCampus(codigoCampus);
-                    predio.setNome("Sala Reunião " + codigoSalaReuniao + " - Prédio" + codigoPredio + " - Campus " + codigoCampus);
-
+salaReuniao.setNumLugares(30+codigoSalaReuniao+codigoPredio+codigoCampus);
+                    
                     try {
                         BancoDeDados.gravaSalaReuniao(salaReuniao);
                     } catch (Exception ex) {

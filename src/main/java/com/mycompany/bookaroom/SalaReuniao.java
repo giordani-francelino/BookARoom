@@ -18,6 +18,7 @@
 package com.mycompany.bookaroom;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -64,9 +65,10 @@ public class SalaReuniao {
     }
 //</editor-fold>
 
-    public void gerarReserva(LocalDate horaInicio, LocalDate horaFim, String assunto) {
+    public void gerarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim, String assunto) {
 
         Reserva reserva = new Reserva();
+        reserva.setDataReserva(dataReserva);
         reserva.setHoraInicio(horaInicio);
         reserva.setHoraFim(horaFim);
         reserva.setNumeroSala(numero);
@@ -76,16 +78,16 @@ public class SalaReuniao {
 
     }
 
-    public void cancelarReserva(LocalDate horaInicio, LocalDate horaFim, String assunto) {
+    public void cancelarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) {
 
         Reserva reserva = new Reserva();
+        reserva.setDataReserva(dataReserva);
         reserva.setHoraInicio(horaInicio);
         reserva.setHoraFim(horaFim);
         reserva.setNumeroSala(numero);
         reserva.setCodigoPredio(codigoPredio);
         reserva.setCodigoCampus(codigoCampus);
 
-        
     }
 
     @Override
@@ -118,8 +120,6 @@ public class SalaReuniao {
 //        return this.codigoCampus == other.codigoCampus;
         return hashCode() == obj.hashCode();
 
-
     }
-
 
 }
