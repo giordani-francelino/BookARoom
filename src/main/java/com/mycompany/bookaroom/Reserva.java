@@ -30,12 +30,11 @@ public class Reserva {
     private LocalDate dataReserva;
     private LocalTime horaInicio;
     private LocalTime horaFim;
-    private int numeroSala;
+    private int codigoSala;
     private int codigoPredio;
     private int codigoCampus;
     private String assunto;
-
-    private int efetuadaPor;
+    private int codigoFuncionario;
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
     public LocalDate getDataReserva() {
@@ -62,16 +61,17 @@ public class Reserva {
         this.horaFim = horaFim;
     }
 
-    public int getNumeroSala() {
-        return numeroSala;
+    public int getCodigoSala() {
+        return codigoSala;
     }
 
-    public void setNumeroSala(int numeroSala) {
-        this.numeroSala = numeroSala;
+    public void setCodigoSala(int codigoSala) {
+        this.codigoSala = codigoSala;
     }
 
     public int getCodigoPredio() {
         return codigoPredio;
+        
     }
 
     public void setCodigoPredio(int codigoPredio) {
@@ -94,15 +94,18 @@ public class Reserva {
         this.assunto = assunto;
     }
 
-    public int getEfetuadaPor() {
-        return efetuadaPor;
+    public int getCodigoFuncionario() {
+        return codigoFuncionario;
     }
 
-    public void setEfetuadaPor(int efetuadaPor) {
-        this.efetuadaPor = efetuadaPor;
+    public void setCodigoFuncionario(int codigoFuncionario) {
+        this.codigoFuncionario = codigoFuncionario;
     }
 
+
+    
     //</editor-fold>
+
     public void inserirItemEquipamentoReserva() {
 
     }
@@ -116,7 +119,7 @@ public class Reserva {
         int hash = 5;
         hash = 89 * hash + Objects.hashCode(this.horaInicio);
         hash = 89 * hash + Objects.hashCode(this.horaFim);
-        hash = 89 * hash + this.numeroSala;
+        hash = 89 * hash + this.codigoSala;
         hash = 89 * hash + this.codigoPredio;
         hash = 89 * hash + this.codigoCampus;
         return hash;
@@ -134,7 +137,7 @@ public class Reserva {
             return false;
         }
 //        final Reserva other = (Reserva) obj;
-//        if (this.numeroSala != other.numeroSala) {
+//        if (this.codigoSala != other.codigoSala) {
 //            return false;
 //        }
 //        if (this.codigoPredio != other.codigoPredio) {

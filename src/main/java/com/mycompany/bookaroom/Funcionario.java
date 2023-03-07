@@ -56,17 +56,15 @@ public class Funcionario {
     }
 
 //</editor-fold>
-    public boolean efetuaReserva(int codigoPredio, int codigoSala, LocalDate dataEvento,
-            LocalTime horaInicio, LocalTime horaFim) {
+    public boolean efetuaReserva(int codigoPredio, int codigoSala, LocalDate dataReserva,
+            LocalTime horaInicio, LocalTime horaFim, String assunto) {
         boolean b = false;
         SalaReuniao salaReuniao = new SalaReuniao();
-        salaReuniao.setNumero(codigoSala);
+        salaReuniao.setCodigo(codigoSala);
         salaReuniao.setCodigoPredio(codigoPredio);
         salaReuniao.setCodigoCampus(this.getCodigoCampus());
-        if(!BancoDeDados.consultaSalaReuniao(salaReuniao)){
-            return false;
-        }
-            
+        b = salaReuniao.gerarReserva( dataReserva,
+             horaInicio,  horaFim,  assunto,  codigo);    
         return b;
 
     }

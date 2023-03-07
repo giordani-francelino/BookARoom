@@ -54,11 +54,11 @@ public class BancoDeDados {
 //              inclui salas para teste
                 for (int codigoSalaReuniao = 1; codigoSalaReuniao < 11; codigoSalaReuniao++) {
                     SalaReuniao salaReuniao = new SalaReuniao();
-                    salaReuniao.setNumero(codigoSalaReuniao);
+                    salaReuniao.setCodigo(codigoSalaReuniao);
                     salaReuniao.setCodigoPredio(codigoPredio);
                     salaReuniao.setCodigoCampus(codigoCampus);
-salaReuniao.setNumLugares(30+codigoSalaReuniao+codigoPredio+codigoCampus);
-                    
+                    salaReuniao.setNumLugares(30 + codigoSalaReuniao + codigoPredio + codigoCampus);
+
                     try {
                         BancoDeDados.gravaSalaReuniao(salaReuniao);
                     } catch (Exception ex) {
@@ -255,7 +255,6 @@ salaReuniao.setNumLugares(30+codigoSalaReuniao+codigoPredio+codigoCampus);
         }
     }
 
-    
     public static ArrayList<Funcionario> listaFuncionario(int codigoCampus) {
 
         ArrayList<Funcionario> p = new ArrayList<Funcionario>();
@@ -267,7 +266,6 @@ salaReuniao.setNumLugares(30+codigoSalaReuniao+codigoPredio+codigoCampus);
         return p;
     }
 
-    
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="crud equipamento">
     public static boolean consultaEquipamento(Equipamento equipamento) {
@@ -300,7 +298,6 @@ salaReuniao.setNumLugares(30+codigoSalaReuniao+codigoPredio+codigoCampus);
         }
     }
 
-       
     public static ArrayList<Equipamento> listaEquipamento(int codigoCampus) {
 
         ArrayList<Equipamento> p = new ArrayList<Equipamento>();
@@ -343,7 +340,7 @@ salaReuniao.setNumLugares(30+codigoSalaReuniao+codigoPredio+codigoCampus);
             }
         }
     }
-       
+
     public static ArrayList<Reserva> listaReserva(int codigoCampus) {
 
         ArrayList<Reserva> p = new ArrayList<Reserva>();
@@ -355,7 +352,6 @@ salaReuniao.setNumLugares(30+codigoSalaReuniao+codigoPredio+codigoCampus);
         return p;
     }
 
-    
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="crud itemEquipamentoReserva">
     public static boolean consultaItemEquipamentoReserva(ItemEquipamentoReserva itemEquipamentoReserva) {
@@ -388,7 +384,7 @@ salaReuniao.setNumLugares(30+codigoSalaReuniao+codigoPredio+codigoCampus);
         }
     }
 
-        public static ArrayList<ItemEquipamentoReserva> listaItemEquipamentoReserva(int codigoCampus) {
+    public static ArrayList<ItemEquipamentoReserva> listaItemEquipamentoReserva(int codigoCampus) {
 
         ArrayList<ItemEquipamentoReserva> p = new ArrayList<ItemEquipamentoReserva>();
         for (ItemEquipamentoReserva c : itemEquipamentoReservas) {
@@ -399,7 +395,5 @@ salaReuniao.setNumLugares(30+codigoSalaReuniao+codigoPredio+codigoCampus);
         return p;
     }
 
-
-    
 //</editor-fold>
 }

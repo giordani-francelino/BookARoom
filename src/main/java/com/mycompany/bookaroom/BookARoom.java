@@ -56,7 +56,7 @@ public class BookARoom {
             } else if (Integer.parseInt(s) == 1) {
 
             } else if (Integer.parseInt(s) == 2) {
-            // incluir e excluir reserva
+                // incluir e excluir reserva
             } else if (Integer.parseInt(s) == 3 || (Integer.parseInt(s) == 4)) {
                 int codigoPredio = 0;
                 int codigoSala = 0;
@@ -81,8 +81,11 @@ public class BookARoom {
                 // efetuar reserva
                 boolean b = false;
                 if (Integer.parseInt(s) == 3) {
+                    String assunto;
+                    System.out.print("Digite o assunto da reserva:\n");
+                    assunto = sc.next();
                     b = f.efetuaReserva(codigoPredio, codigoSala, dataEvento,
-                            horaInicio, horaFim);
+                            horaInicio, horaFim, assunto);
                     if (b == true) {
                         System.out.println("Reserva efetuada com sucesso");
                     } else {

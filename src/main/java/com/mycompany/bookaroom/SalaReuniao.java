@@ -19,6 +19,7 @@ package com.mycompany.bookaroom;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 /**
  *
@@ -26,18 +27,18 @@ import java.time.LocalTime;
  */
 public class SalaReuniao {
 
-    private int numero;
+    private int codigo;
     private int codigoPredio;
     private int codigoCampus;
     private int numLugares;
 //<editor-fold defaultstate="collapsed" desc="getters and setters">
 
-    public int getNumero() {
-        return numero;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public int getCodigoPredio() {
@@ -65,16 +66,38 @@ public class SalaReuniao {
     }
 //</editor-fold>
 
-    public void gerarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim, String assunto) {
+    public boolean gerarReserva(LocalDate dataReserva,
+            LocalTime horaInicio, LocalTime horaFim, String assunto, int codigoFuncionario) {
+        boolean b = false;
+        if (!BancoDeDados.consultaSalaReuniao(this)) {
+            return false;
+        }
 
         Reserva reserva = new Reserva();
         reserva.setDataReserva(dataReserva);
         reserva.setHoraInicio(horaInicio);
         reserva.setHoraFim(horaFim);
-        reserva.setNumeroSala(numero);
+        reserva.setCodigoSala(codigo);
         reserva.setCodigoPredio(codigoPredio);
         reserva.setCodigoCampus(codigoCampus);
         reserva.setAssunto(assunto);
+        reserva.setCodigoFuncionario(codigoFuncionario);
+
+        ArrayList<Reserva> reservas = BancoDeDados.listaReserva(codigoCampus);
+        for (Reserva c : reservas) {
+            if (c.getCodigoSala() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+                if (c.getDataReserva().compareTo(reserva.getDataReserva())==0){
+                    
+                }
+            }
+        }
+        try {
+            BancoDeDados.gravaReserva(reserva);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return true;
 
     }
 
@@ -84,7 +107,7 @@ public class SalaReuniao {
         reserva.setDataReserva(dataReserva);
         reserva.setHoraInicio(horaInicio);
         reserva.setHoraFim(horaFim);
-        reserva.setNumeroSala(numero);
+        reserva.setCodigoSala(codigo);
         reserva.setCodigoPredio(codigoPredio);
         reserva.setCodigoCampus(codigoCampus);
 
@@ -93,7 +116,7 @@ public class SalaReuniao {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 97 * hash + this.numero;
+        hash = 97 * hash + this.codigo;
         hash = 97 * hash + this.codigoPredio;
         hash = 97 * hash + this.codigoCampus;
         return hash;
@@ -111,7 +134,7 @@ public class SalaReuniao {
             return false;
         }
 //        final SalaReuniao other = (SalaReuniao) obj;
-//        if (this.numero != other.numero) {
+//        if (this.codigo != other.codigo) {
 //            return false;
 //        }
 //        if (this.codigoPredio != other.codigoPredio) {
