@@ -106,14 +106,11 @@ public class BancoDeDados {
 
 //<editor-fold defaultstate="collapsed" desc="crud campus">
     public static boolean consultaCampus(Campus campus) {
-        for (Iterator<Campus> iterator = campuss.iterator(); iterator.hasNext();) {
-            Campus c = iterator.next();
-
+        for (Campus c : campuss) {
             if (campus.equals(c)) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -321,11 +318,12 @@ public class BancoDeDados {
         return false;
     }
 
-    public static void gravaReserva(Reserva reserva) throws Exception {
+    public static boolean gravaReserva(Reserva reserva) throws Exception {
         if (consultaReserva(reserva)) {
             throw new Exception("Reserva já cadastrado.");
         }
         reservas.add(reserva);
+        return true;
     }
 
     public static void excluiReserva(Reserva reserva) throws Exception {

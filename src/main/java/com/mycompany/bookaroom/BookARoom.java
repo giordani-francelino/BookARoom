@@ -84,12 +84,12 @@ public class BookARoom {
                     String assunto;
                     System.out.print("Digite o assunto da reserva:\n");
                     assunto = sc.next();
-                    b = f.efetuaReserva(codigoPredio, codigoSala, dataEvento,
-                            horaInicio, horaFim, assunto);
-                    if (b == true) {
-                        System.out.println("Reserva efetuada com sucesso");
-                    } else {
-                        System.out.println("Data/horário imdisponivél pra essa sala");
+                    try {
+                        f.efetuaReserva(codigoPredio, codigoSala, dataEvento,
+                                horaInicio, horaFim, assunto);
+                        System.out.print("Reserva gravad com sucesso.\n");
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
                     }
                     // cancelar reserva    
                 } else {
@@ -105,6 +105,12 @@ public class BookARoom {
             } else {
                 break;
             }
+            System.out.print("Selecione uma das opções abaixo:\n");
+            System.out.print("1 - Salas livres\n");
+            System.out.print("2 - Salas ocupadas\n");
+            System.out.print("3 - Efetuar reserva\n");
+            System.out.print("4 - Cancelar reserva\n");
+            System.out.print("0 - Sair\n");
 
         }
         sc.close(); //Encerra o programa

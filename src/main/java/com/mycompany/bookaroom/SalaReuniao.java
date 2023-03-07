@@ -67,10 +67,9 @@ public class SalaReuniao {
 //</editor-fold>
 
     public boolean gerarReserva(LocalDate dataReserva,
-            LocalTime horaInicio, LocalTime horaFim, String assunto, int codigoFuncionario) {
-        boolean b = false;
+            LocalTime horaInicio, LocalTime horaFim, String assunto, int codigoFuncionario) throws Exception {
         if (!BancoDeDados.consultaSalaReuniao(this)) {
-            return false;
+            throw new Exception("Sala não cadastrada.");
         }
 
         Reserva reserva = new Reserva();

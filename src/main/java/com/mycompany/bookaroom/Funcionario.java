@@ -57,7 +57,7 @@ public class Funcionario {
 
 //</editor-fold>
     public boolean efetuaReserva(int codigoPredio, int codigoSala, LocalDate dataReserva,
-            LocalTime horaInicio, LocalTime horaFim, String assunto) {
+            LocalTime horaInicio, LocalTime horaFim, String assunto) throws Exception {
         boolean b = false;
         SalaReuniao salaReuniao = new SalaReuniao();
         salaReuniao.setCodigo(codigoSala);
