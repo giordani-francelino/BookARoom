@@ -87,7 +87,7 @@ public class BookARoom {
                     try {
                         f.efetuaReserva(codigoPredio, codigoSala, dataEvento,
                                 horaInicio, horaFim, assunto);
-                        System.out.print("Reserva gravad com sucesso.\n");
+                        System.out.print("Reserva gravada com sucesso.\n");
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                     }

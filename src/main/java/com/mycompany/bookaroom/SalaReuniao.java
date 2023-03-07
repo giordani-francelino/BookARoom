@@ -20,6 +20,7 @@ package com.mycompany.bookaroom;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -82,25 +83,28 @@ public class SalaReuniao {
         reserva.setAssunto(assunto);
         reserva.setCodigoFuncionario(codigoFuncionario);
 
+//data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
+//data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
+//data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
         ArrayList<Reserva> reservas = BancoDeDados.listaReserva(codigoCampus);
         for (Reserva c : reservas) {
             if (c.getCodigoSala() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
-                if (c.getDataReserva().compareTo(reserva.getDataReserva())==0){
-                    
+                if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
+                    if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
+                            && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
+                            || (reserva.getHoraFim().compareTo(c.getHoraInicio()) >= 0
+                            && reserva.getHoraFim().compareTo(c.getHoraFim()) <= 0)) {
+                        throw new Exception("Sala já reserva nesse horário");
+                    }
                 }
             }
         }
-        try {
-            BancoDeDados.gravaReserva(reserva);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-
+        BancoDeDados.gravaReserva(reserva);
         return true;
 
     }
 
-    public void cancelarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) {
+    public boolean cancelarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
 
         Reserva reserva = new Reserva();
         reserva.setDataReserva(dataReserva);
@@ -109,6 +113,23 @@ public class SalaReuniao {
         reserva.setCodigoSala(codigo);
         reserva.setCodigoPredio(codigoPredio);
         reserva.setCodigoCampus(codigoCampus);
+
+//        ArrayList<Reserva> reservas = BancoDeDados.listaReserva(codigoCampus);
+//       
+//        for (Iterator<Reserva> iterator = reservas.iterator(); iterator.hasNext();) {
+//            Reserva c = iterator.next();
+//            if (c.getCodigoSala() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+//                if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
+//                    if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) == 0
+//                            && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)) {
+//                        iterator.remove();
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+        BancoDeDados.excluiReserva(reserva);
+        throw new Exception("Sala não reserva nesse horário");
 
     }
 

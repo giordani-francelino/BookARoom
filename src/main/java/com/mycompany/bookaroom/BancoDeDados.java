@@ -114,11 +114,12 @@ public class BancoDeDados {
         return false;
     }
 
-    public static void gravaCampus(Campus campus) throws Exception {
+    public static boolean gravaCampus(Campus campus) throws Exception {
         if (consultaCampus(campus)) {
             throw new Exception("Campus já cadastrado.");
         }
         campuss.add(campus);
+        return true;
     }
 
     public static void excluiCampus(Campus campus) throws Exception {
@@ -146,11 +147,12 @@ public class BancoDeDados {
         return false;
     }
 
-    public static void gravaPredio(Predio predio) throws Exception {
+    public static boolean gravaPredio(Predio predio) throws Exception {
         if (consultaPredio(predio)) {
             throw new Exception("Predio já cadastrado.");
         }
         predios.add(predio);
+        return true;
     }
 
     public static void excluiPredio(Predio predio) throws Exception {
@@ -189,11 +191,12 @@ public class BancoDeDados {
         return false;
     }
 
-    public static void gravaSalaReuniao(SalaReuniao salaReuniao) throws Exception {
+    public static boolean gravaSalaReuniao(SalaReuniao salaReuniao) throws Exception {
         if (consultaSalaReuniao(salaReuniao)) {
             throw new Exception("SalaReuniao já cadastrado.");
         }
         salaReuniaos.add(salaReuniao);
+        return true;
     }
 
     public static void excluiSalaReuniao(SalaReuniao salaReuniao) throws Exception {
@@ -232,11 +235,12 @@ public class BancoDeDados {
         return false;
     }
 
-    public static void gravaFuncionario(Funcionario funcionario) throws Exception {
+    public static boolean gravaFuncionario(Funcionario funcionario) throws Exception {
         if (consultaFuncionario(funcionario)) {
             throw new Exception("Funcionario já cadastrado.");
         }
         funcionarios.add(funcionario);
+        return true;
     }
 
     public static void excluiFuncionario(Funcionario funcionario) throws Exception {
@@ -275,11 +279,12 @@ public class BancoDeDados {
         return false;
     }
 
-    public static void gravaEquipamento(Equipamento equipamento) throws Exception {
+    public static boolean gravaEquipamento(Equipamento equipamento) throws Exception {
         if (consultaEquipamento(equipamento)) {
             throw new Exception("Equipamento já cadastrado.");
         }
         equipamentos.add(equipamento);
+        return true;
     }
 
     public static void excluiEquipamento(Equipamento equipamento) throws Exception {
@@ -326,17 +331,18 @@ public class BancoDeDados {
         return true;
     }
 
-    public static void excluiReserva(Reserva reserva) throws Exception {
+    public static boolean excluiReserva(Reserva reserva) throws Exception {
         if (!consultaReserva(reserva)) {
-            throw new Exception("Reserva não cadastrado.");
+            throw new Exception("Sala não reserva nesse horário");
         }
         for (Iterator<Reserva> iterator = reservas.iterator(); iterator.hasNext();) {
             Reserva c = iterator.next();
             if (reserva.equals(c)) {
                 iterator.remove();
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     public static ArrayList<Reserva> listaReserva(int codigoCampus) {
@@ -362,14 +368,15 @@ public class BancoDeDados {
         return false;
     }
 
-    public static void gravaItemEquipamentoReserva(ItemEquipamentoReserva itemEquipamentoReserva) throws Exception {
+    public static boolean gravaItemEquipamentoReserva(ItemEquipamentoReserva itemEquipamentoReserva) throws Exception {
         if (consultaItemEquipamentoReserva(itemEquipamentoReserva)) {
             throw new Exception("ItemEquipamentoReserva já cadastrado.");
         }
         itemEquipamentoReservas.add(itemEquipamentoReserva);
+        return true;
     }
 
-    public static void excluiItemEquipamentoReserva(ItemEquipamentoReserva itemEquipamentoReserva) throws Exception {
+    public static boolean excluiItemEquipamentoReserva(ItemEquipamentoReserva itemEquipamentoReserva) throws Exception {
         if (!consultaItemEquipamentoReserva(itemEquipamentoReserva)) {
             throw new Exception("ItemEquipamentoReserva não cadastrado.");
         }
@@ -377,9 +384,10 @@ public class BancoDeDados {
             ItemEquipamentoReserva c = iterator.next();
             if (itemEquipamentoReserva.equals(c)) {
                 iterator.remove();
-                return;
+                return true;
             }
         }
+        return true;
     }
 
     public static ArrayList<ItemEquipamentoReserva> listaItemEquipamentoReserva(int codigoCampus) {

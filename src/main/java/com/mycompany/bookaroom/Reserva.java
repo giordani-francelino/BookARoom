@@ -35,6 +35,7 @@ public class Reserva {
     private int codigoCampus;
     private String assunto;
     private int codigoFuncionario;
+    private String nomeFuncionario;
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
     public LocalDate getDataReserva() {
@@ -102,6 +103,14 @@ public class Reserva {
         this.codigoFuncionario = codigoFuncionario;
     }
 
+    public String getNomeFuncionario() {
+        return nomeFuncionario;
+    }
+
+    public void setNomeFuncionario(String nomeFuncionario) {
+        this.nomeFuncionario = nomeFuncionario;
+    }
+
 
     
     //</editor-fold>
@@ -114,14 +123,16 @@ public class Reserva {
 
     }
 
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.horaInicio);
-        hash = 89 * hash + Objects.hashCode(this.horaFim);
-        hash = 89 * hash + this.codigoSala;
-        hash = 89 * hash + this.codigoPredio;
-        hash = 89 * hash + this.codigoCampus;
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.dataReserva);
+        hash = 37 * hash + Objects.hashCode(this.horaInicio);
+        hash = 37 * hash + Objects.hashCode(this.horaFim);
+        hash = 37 * hash + this.codigoSala;
+        hash = 37 * hash + this.codigoPredio;
+        hash = 37 * hash + this.codigoCampus;
         return hash;
     }
 
@@ -146,12 +157,14 @@ public class Reserva {
 //        if (this.codigoCampus != other.codigoCampus) {
 //            return false;
 //        }
+//        if (!Objects.equals(this.dataReserva, other.dataReserva)) {
+//            return false;
+//        }
 //        if (!Objects.equals(this.horaInicio, other.horaInicio)) {
 //            return false;
 //        }
 //        return Objects.equals(this.horaFim, other.horaFim);
         return hashCode() == obj.hashCode();
-
     }
 
 }
