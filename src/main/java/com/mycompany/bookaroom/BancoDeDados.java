@@ -393,7 +393,7 @@ public class BancoDeDados {
     public static boolean excluiReserva(Reserva reserva) throws Exception {
 
         if (!consultaReserva(reserva)) {
-            throw new Exception("Sala não reserva nesse horário");
+            throw new Exception("Sala não reserva nessa data-horário");
         }
 
         for (Iterator<Reserva> iterator = reservas.iterator(); iterator.hasNext();) {

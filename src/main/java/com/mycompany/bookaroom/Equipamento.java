@@ -66,19 +66,18 @@ public class Equipamento {
     }
 
 //</editor-fold>
-
- 
-    public boolean gerarItemEquipamento(LocalDate dataReserva,
+    public boolean gerarReservaEquipamento(int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
             LocalTime horaInicio, LocalTime horaFim, int codigoFuncionario) throws Exception {
         if (!BancoDeDados.consultaEquipamento(this)) {
-            throw new Exception("Equipamento não cadastrada.");
+            throw new Exception("Equipamento não cadastrado.");
         }
 
         ItemEquipamento ItemEquipamento = new ItemEquipamento();
+        ItemEquipamento.setCodigoEquipamento(codigo);
         ItemEquipamento.setDataReserva(dataReserva);
         ItemEquipamento.setHoraInicio(horaInicio);
         ItemEquipamento.setHoraFim(horaFim);
-        ItemEquipamento.setCodigoSalaReuniao(SalaReuniao);
+        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
         ItemEquipamento.setCodigoPredio(codigoPredio);
         ItemEquipamento.setCodigoCampus(codigoCampus);
         ItemEquipamento.setCodigoFuncionario(codigoFuncionario);
@@ -88,13 +87,13 @@ public class Equipamento {
 //data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
         ArrayList<ItemEquipamento> ItemEquipamentos = BancoDeDados.listaItemEquipamento(codigoCampus);
         for (ItemEquipamento c : ItemEquipamentos) {
-            if (c.getCodigoSalaReuniao() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+            if (c.getCodigoEquipamento() == codigo
+                    && c.getCodigoSalaReuniao() == codigoSalaReuniao
+                    && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
                 if (ItemEquipamento.getDataReserva().compareTo(c.getDataReserva()) == 0) {
-                    if ((ItemEquipamento.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
-                            && ItemEquipamento.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
-                            || (ItemEquipamento.getHoraFim().compareTo(c.getHoraInicio()) >= 0
-                            && ItemEquipamento.getHoraFim().compareTo(c.getHoraFim()) <= 0)) {
-                        throw new Exception("Sala já ItemEquipamento nesse horário");
+                    if ((ItemEquipamento.getHoraInicio().compareTo(c.getHoraInicio()) == 0
+                            && ItemEquipamento.getHoraFim().compareTo(c.getHoraFim()) == 0)) {
+                        throw new Exception("Equipamento já incluido nessa reserva");
                     }
                 }
             }
@@ -104,23 +103,20 @@ public class Equipamento {
 
     }
 
-    public boolean cancelarItemEquipamento(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception  {
+    public boolean cancelarReservaEquipamento(int codigoPredio, int codigoSalaReuniao,
+            LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
 
         ItemEquipamento ItemEquipamento = new ItemEquipamento();
+        ItemEquipamento.setCodigoEquipamento(codigo);
         ItemEquipamento.setDataReserva(dataReserva);
         ItemEquipamento.setHoraInicio(horaInicio);
         ItemEquipamento.setHoraFim(horaFim);
-        ItemEquipamento.setCodigoSalaReuniao(codigo);
+        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
         ItemEquipamento.setCodigoPredio(codigoPredio);
         ItemEquipamento.setCodigoCampus(codigoCampus);
         return BancoDeDados.excluiItemEquipamento(ItemEquipamento);
-//        throw new Exception("Sala não ItemEquipamento nesse horário");
-
     }
-   
-    
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -148,5 +144,5 @@ public class Equipamento {
         return hashCode() == obj.hashCode();
 
     }
-    
+
 }

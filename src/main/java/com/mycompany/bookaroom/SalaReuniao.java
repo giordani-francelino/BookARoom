@@ -67,12 +67,12 @@ public class SalaReuniao {
     }
 //</editor-fold>
 
+    
     public boolean gerarReserva(LocalDate dataReserva,
             LocalTime horaInicio, LocalTime horaFim, String assunto, int codigoFuncionario) throws Exception {
         if (!BancoDeDados.consultaSalaReuniao(this)) {
             throw new Exception("Sala não cadastrada.");
         }
-
         Reserva reserva = new Reserva();
         reserva.setDataReserva(dataReserva);
         reserva.setHoraInicio(horaInicio);
@@ -82,7 +82,7 @@ public class SalaReuniao {
         reserva.setCodigoCampus(codigoCampus);
         reserva.setAssunto(assunto);
         reserva.setCodigoFuncionario(codigoFuncionario);
-
+   
 //data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
 //data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
 //data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
@@ -114,8 +114,6 @@ public class SalaReuniao {
         reserva.setCodigoPredio(codigoPredio);
         reserva.setCodigoCampus(codigoCampus);
         return BancoDeDados.excluiReserva(reserva);
-//        throw new Exception("Sala não reserva nesse horário");
-
     }
 
     @Override
