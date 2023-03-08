@@ -17,6 +17,8 @@
  */
 package com.mycompany.bookaroom;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -122,7 +124,7 @@ public class BancoDeDados {
         return true;
     }
 
-    public static void excluiCampus(Campus campus) throws Exception {
+    public static boolean excluiCampus(Campus campus) throws Exception {
         if (!consultaCampus(campus)) {
             throw new Exception("Campus não cadastrado.");
         }
@@ -130,9 +132,20 @@ public class BancoDeDados {
             Campus c = iterator.next();
             if (campus.equals(c)) {
                 iterator.remove();
-                return;
+                return true;
             }
         }
+        return true;
+    }
+
+    public static Campus recuperaCampus(int codigoCampus) throws Exception {
+        for (Iterator<Campus> iterator = campuss.iterator(); iterator.hasNext();) {
+            Campus c = iterator.next();
+            if (c.getCodigo() == codigoCampus) {
+                return c;
+            }
+        }
+        throw new Exception("Campus não cadastrado.");
     }
 
 //</editor-fold>
@@ -155,7 +168,7 @@ public class BancoDeDados {
         return true;
     }
 
-    public static void excluiPredio(Predio predio) throws Exception {
+    public static boolean excluiPredio(Predio predio) throws Exception {
         if (!consultaPredio(predio)) {
             throw new Exception("Predio não cadastrado.");
         }
@@ -163,9 +176,20 @@ public class BancoDeDados {
             Predio c = iterator.next();
             if (predio.equals(c)) {
                 iterator.remove();
-                return;
+                return true;
             }
         }
+        return true;
+    }
+
+    public static Predio recuperaPredio(int codigoPredio, int codigoCampus) throws Exception {
+        for (Iterator<Predio> iterator = predios.iterator(); iterator.hasNext();) {
+            Predio c = iterator.next();
+            if (c.getCodigo() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+                return c;
+            }
+        }
+        throw new Exception("Predio não cadastrado.");
     }
 
     public static ArrayList<Predio> listaPredio(int codigoCampus) {
@@ -199,17 +223,30 @@ public class BancoDeDados {
         return true;
     }
 
-    public static void excluiSalaReuniao(SalaReuniao salaReuniao) throws Exception {
+    public static boolean excluiSalaReuniao(SalaReuniao salaReuniao) throws Exception {
         if (!consultaSalaReuniao(salaReuniao)) {
-            throw new Exception("SalaReuniao não cadastrado.");
+            throw new Exception("Sala de Reuniao não cadastrada.");
         }
         for (Iterator<SalaReuniao> iterator = salaReuniaos.iterator(); iterator.hasNext();) {
             SalaReuniao c = iterator.next();
             if (salaReuniao.equals(c)) {
                 iterator.remove();
-                return;
+                return true;
             }
         }
+        return true;
+    }
+
+    public static SalaReuniao recuperaSalaReuniao(int codigoSalaReuniao, int codigoPredio,
+            int codigoCampus) throws Exception {
+        for (Iterator<SalaReuniao> iterator = salaReuniaos.iterator(); iterator.hasNext();) {
+            SalaReuniao c = iterator.next();
+            if (c.getCodigo() == codigoSalaReuniao && c.getCodigoPredio()
+                    == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+                return c;
+            }
+        }
+        throw new Exception("Sala de Reuniao não cadastrada.");
     }
 
     public static ArrayList<SalaReuniao> listaSalaReuniao(int codigoCampus) {
@@ -243,17 +280,28 @@ public class BancoDeDados {
         return true;
     }
 
-    public static void excluiFuncionario(Funcionario funcionario) throws Exception {
+    public static boolean excluiFuncionario(Funcionario funcionario) throws Exception {
         if (!consultaFuncionario(funcionario)) {
-            throw new Exception("Funcionario não cadastrado.");
+            throw new Exception("Funcionário não cadastrado.");
         }
         for (Iterator<Funcionario> iterator = funcionarios.iterator(); iterator.hasNext();) {
             Funcionario c = iterator.next();
             if (funcionario.equals(c)) {
                 iterator.remove();
-                return;
+                return true;
             }
         }
+        return true;
+    }
+
+    public static Funcionario recuperaFuncionario(int codigoFuncionario, int codigoCampus) throws Exception {
+        for (Iterator<Funcionario> iterator = funcionarios.iterator(); iterator.hasNext();) {
+            Funcionario c = iterator.next();
+            if (c.getCodigo() == codigoFuncionario && c.getCodigoCampus() == codigoCampus) {
+                return c;
+            }
+        }
+        throw new Exception("Funcionário não cadastrado.");
     }
 
     public static ArrayList<Funcionario> listaFuncionario(int codigoCampus) {
@@ -287,7 +335,7 @@ public class BancoDeDados {
         return true;
     }
 
-    public static void excluiEquipamento(Equipamento equipamento) throws Exception {
+    public static boolean excluiEquipamento(Equipamento equipamento) throws Exception {
         if (!consultaEquipamento(equipamento)) {
             throw new Exception("Equipamento não cadastrado.");
         }
@@ -295,9 +343,20 @@ public class BancoDeDados {
             Equipamento c = iterator.next();
             if (equipamento.equals(c)) {
                 iterator.remove();
-                return;
+                return true;
             }
         }
+        return true;
+    }
+
+    public static Equipamento recuperaEquipamento(int codigoEquipamento,int codigoCampus) throws Exception {
+        for (Iterator<Equipamento> iterator = equipamentos.iterator(); iterator.hasNext();) {
+            Equipamento c = iterator.next();
+            if (c.getCodigo() == codigoEquipamento&&c.getCodigoCampus() == codigoCampus) {
+                return c;
+            }
+        }
+        throw new Exception("Equipamento não cadastrado.");
     }
 
     public static ArrayList<Equipamento> listaEquipamento(int codigoCampus) {
@@ -345,6 +404,22 @@ public class BancoDeDados {
         return false;
     }
 
+    public static Reserva recuperaReserva(int codigoSalaReuniao, int codigoPredio,
+            int codigoCampus, LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
+        for (Iterator<Reserva> iterator = reservas.iterator(); iterator.hasNext();) {
+            Reserva c = iterator.next();
+            if (c.getCodigoSalaReuniao() == codigoSalaReuniao
+                    && c.getCodigoPredio()== codigoPredio 
+                    && c.getCodigoCampus() == codigoCampus 
+                    && c.getDataReserva()== dataReserva 
+                    && c.getHoraInicio()== horaInicio 
+                    && c.getHoraFim()== horaFim) {
+                return c;
+            }
+        }
+        throw new Exception("Reserva não efetuada para essa data e hora.");
+    }
+
     public static ArrayList<Reserva> listaReserva(int codigoCampus) {
 
         ArrayList<Reserva> p = new ArrayList<Reserva>();
@@ -388,6 +463,23 @@ public class BancoDeDados {
             }
         }
         return true;
+    }
+
+    public static ItemEquipamentoReserva recuperaItemEquipamentoReserva(int codigo,int codigoSalaReuniao, int codigoPredio,
+            int codigoCampus, LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
+        for (Iterator<ItemEquipamentoReserva> iterator = itemEquipamentoReservas.iterator(); iterator.hasNext();) {
+            ItemEquipamentoReserva c = iterator.next();
+            if (c.getCodigo() ==codigo
+                    && c.getCodigoSalaReuniao() == codigoSalaReuniao
+                    && c.getCodigoPredio()== codigoPredio 
+                    && c.getCodigoCampus() == codigoCampus 
+                    && c.getDataReserva()== dataReserva 
+                    && c.getHoraInicio()== horaInicio 
+                    && c.getHoraFim()== horaFim) {
+                return c;
+            }
+        }
+        throw new Exception("ItemEquipamentoReserva não efetuada para essa data e hora.");
     }
 
     public static ArrayList<ItemEquipamentoReserva> listaItemEquipamentoReserva(int codigoCampus) {

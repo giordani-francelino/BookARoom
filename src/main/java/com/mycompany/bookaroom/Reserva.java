@@ -30,7 +30,7 @@ public class Reserva {
     private LocalDate dataReserva;
     private LocalTime horaInicio;
     private LocalTime horaFim;
-    private int codigoSala;
+    private int codigoSalaReuniao;
     private int codigoPredio;
     private int codigoCampus;
     private String assunto;
@@ -62,12 +62,12 @@ public class Reserva {
         this.horaFim = horaFim;
     }
 
-    public int getCodigoSala() {
-        return codigoSala;
+    public int getCodigoSalaReuniao() {
+        return codigoSalaReuniao;
     }
 
-    public void setCodigoSala(int codigoSala) {
-        this.codigoSala = codigoSala;
+    public void setCodigoSalaReuniao(int codigoSala) {
+        this.codigoSalaReuniao = codigoSala;
     }
 
     public int getCodigoPredio() {
@@ -130,7 +130,7 @@ public class Reserva {
         hash = 37 * hash + Objects.hashCode(this.dataReserva);
         hash = 37 * hash + Objects.hashCode(this.horaInicio);
         hash = 37 * hash + Objects.hashCode(this.horaFim);
-        hash = 37 * hash + this.codigoSala;
+        hash = 37 * hash + this.codigoSalaReuniao;
         hash = 37 * hash + this.codigoPredio;
         hash = 37 * hash + this.codigoCampus;
         return hash;

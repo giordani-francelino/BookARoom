@@ -27,22 +27,22 @@ import java.util.Objects;
  */
 public class ItemEquipamentoReserva {
 
-    private int codigoEquipamento;
+    private int codigo;
     private LocalDate dataReserva;
     private LocalTime horaInicio;
     private LocalTime horaFim;
-    private int codigoSala;
+    private int codigoSalaReuniao;
     private int codigoPredio;
     private int codigoCampus;
     private String nomeEquipamento;
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
-    public int getCodigoEquipamento() {
-        return codigoEquipamento;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setCodigoEquipamento(int codigoEquipamento) {
-        this.codigoEquipamento = codigoEquipamento;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public LocalDate getDataReserva() {
@@ -69,12 +69,12 @@ public class ItemEquipamentoReserva {
         this.horaFim = horaFim;
     }
 
-    public int getCodigoSala() {
-        return codigoSala;
+    public int getCodigoSalaReuniao() {
+        return codigoSalaReuniao;
     }
 
-    public void setCodigoSala(int codigoSala) {
-        this.codigoSala = codigoSala;
+    public void setCodigoSalaReuniao(int codigoSalaReuniao) {
+        this.codigoSalaReuniao = codigoSalaReuniao;
     }
 
     public int getCodigoPredio() {
@@ -105,11 +105,11 @@ public class ItemEquipamentoReserva {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 29 * hash + this.codigoEquipamento;
+        hash = 29 * hash + this.codigo;
         hash = 29 * hash + Objects.hashCode(this.dataReserva);
         hash = 29 * hash + Objects.hashCode(this.horaInicio);
         hash = 29 * hash + Objects.hashCode(this.horaFim);
-        hash = 29 * hash + this.codigoSala;
+        hash = 29 * hash + this.codigoSalaReuniao;
         hash = 29 * hash + this.codigoPredio;
         hash = 29 * hash + this.codigoCampus;
         return hash;

@@ -6,6 +6,8 @@ package com.mycompany.bookaroom;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,19 +28,27 @@ public class BookARoom {
 //<editor-fold defaultstate="collapsed" desc="valida funcionário">
 
 // valida funcionario
-//        System.out.print("Digite o codigo do Campus:");
+//        System.out.print("Digite o codigo do Campus:\n");
 //        s = sc.next();
 //        campus = Integer.parseInt(s);
-//        System.out.print("Digite o codigo do Funcionário:");
+//        System.out.print("Digite o codigo do Funcionário:\n");
 //        s = sc.next();
 //        funcionario = Integer.parseInt(s);
         Funcionario f = new Funcionario();
         f.setCodigo(funcionario);
         f.setCodigoCampus(campus);
-        if (!BancoDeDados.consultaFuncionario(f)) {
+        try {
+            f = BancoDeDados.recuperaFuncionario(funcionario, campus);
+        } catch (Exception ex) {
             System.out.println("Funcionário não cadstrado.");
             return;
         }
+        System.out.println(f.getNome());
+
+//        if (!BancoDeDados.consultaFuncionario(f)) {
+//            System.out.println("Funcionário não cadstrado.");
+//            return;
+//        }
 // valida funcionário
 //</editor-fold>
         System.out.print("Selecione uma das opções abaixo:\n");
@@ -60,7 +70,7 @@ public class BookARoom {
             } else if (Integer.parseInt(s) == 3 || (Integer.parseInt(s) == 4)) {
                 int codigoPredio = 0;
                 int codigoSala = 0;
-                LocalDate dataEvento = LocalDate.now();
+                LocalDate dataReserva = LocalDate.now();
                 LocalTime horaInicio = LocalTime.now();
                 LocalTime horaFim = LocalTime.now();
                 System.out.print("Digite o predio:\n");
@@ -71,7 +81,7 @@ public class BookARoom {
                 codigoSala = Integer.parseInt(i);
                 System.out.print("Digite a data da reserva no formato 'aaaa-mm-dd':\n");
                 i = sc.next();
-                dataEvento = LocalDate.parse(i);
+                dataReserva = LocalDate.parse(i);
                 System.out.print("Digite a hora de início no formato 'hh:mm':\n");
                 i = sc.next();
                 horaInicio = LocalTime.parse(i);
@@ -85,7 +95,7 @@ public class BookARoom {
                     System.out.print("Digite o assunto da reserva:\n");
                     assunto = sc.next();
                     try {
-                        f.efetuaReserva(codigoPredio, codigoSala, dataEvento,
+                        f.efetuaReserva(codigoPredio, codigoSala, dataReserva,
                                 horaInicio, horaFim, assunto);
                         System.out.print("Reserva gravada com sucesso.\n");
                     } catch (Exception ex) {
@@ -93,7 +103,7 @@ public class BookARoom {
                     }
                     // cancelar reserva    
                 } else {
-                    b = f.cancelaReserva(codigoPredio, codigoSala, dataEvento,
+                    b = f.cancelaReserva(codigoPredio, codigoSala, dataReserva,
                             horaInicio, horaFim);
                     if (b == true) {
                         System.out.println("Reserva cancelada com sucesso");

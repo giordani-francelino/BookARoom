@@ -77,7 +77,7 @@ public class SalaReuniao {
         reserva.setDataReserva(dataReserva);
         reserva.setHoraInicio(horaInicio);
         reserva.setHoraFim(horaFim);
-        reserva.setCodigoSala(codigo);
+        reserva.setCodigoSalaReuniao(codigo);
         reserva.setCodigoPredio(codigoPredio);
         reserva.setCodigoCampus(codigoCampus);
         reserva.setAssunto(assunto);
@@ -88,7 +88,7 @@ public class SalaReuniao {
 //data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
         ArrayList<Reserva> reservas = BancoDeDados.listaReserva(codigoCampus);
         for (Reserva c : reservas) {
-            if (c.getCodigoSala() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+            if (c.getCodigoSalaReuniao() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
                 if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
                     if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
                             && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
@@ -110,26 +110,12 @@ public class SalaReuniao {
         reserva.setDataReserva(dataReserva);
         reserva.setHoraInicio(horaInicio);
         reserva.setHoraFim(horaFim);
-        reserva.setCodigoSala(codigo);
+        reserva.setCodigoSalaReuniao(codigo);
         reserva.setCodigoPredio(codigoPredio);
         reserva.setCodigoCampus(codigoCampus);
 
-//        ArrayList<Reserva> reservas = BancoDeDados.listaReserva(codigoCampus);
-//       
-//        for (Iterator<Reserva> iterator = reservas.iterator(); iterator.hasNext();) {
-//            Reserva c = iterator.next();
-//            if (c.getCodigoSala() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
-//                if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
-//                    if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) == 0
-//                            && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)) {
-//                        iterator.remove();
-//                        return true;
-//                    }
-//                }
-//            }
-//        }
-        BancoDeDados.excluiReserva(reserva);
-        throw new Exception("Sala não reserva nesse horário");
+        return BancoDeDados.excluiReserva(reserva);
+//        throw new Exception("Sala não reserva nesse horário");
 
     }
 
