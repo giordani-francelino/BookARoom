@@ -17,6 +17,10 @@
  */
 package com.mycompany.bookaroom;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+
 /**
  *
  * @author Your Name &lt;francelino at ifnmg&gt;
@@ -63,6 +67,60 @@ public class Equipamento {
 
 //</editor-fold>
 
+ 
+    public boolean gerarItemEquipamento(LocalDate dataReserva,
+            LocalTime horaInicio, LocalTime horaFim, int codigoFuncionario) throws Exception {
+        if (!BancoDeDados.consultaEquipamento(this)) {
+            throw new Exception("Equipamento não cadastrada.");
+        }
+
+        ItemEquipamento ItemEquipamento = new ItemEquipamento();
+        ItemEquipamento.setDataReserva(dataReserva);
+        ItemEquipamento.setHoraInicio(horaInicio);
+        ItemEquipamento.setHoraFim(horaFim);
+        ItemEquipamento.setCodigoSalaReuniao(SalaReuniao);
+        ItemEquipamento.setCodigoPredio(codigoPredio);
+        ItemEquipamento.setCodigoCampus(codigoCampus);
+        ItemEquipamento.setCodigoFuncionario(codigoFuncionario);
+
+//data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
+//data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
+//data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
+        ArrayList<ItemEquipamento> ItemEquipamentos = BancoDeDados.listaItemEquipamento(codigoCampus);
+        for (ItemEquipamento c : ItemEquipamentos) {
+            if (c.getCodigoSalaReuniao() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+                if (ItemEquipamento.getDataReserva().compareTo(c.getDataReserva()) == 0) {
+                    if ((ItemEquipamento.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
+                            && ItemEquipamento.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
+                            || (ItemEquipamento.getHoraFim().compareTo(c.getHoraInicio()) >= 0
+                            && ItemEquipamento.getHoraFim().compareTo(c.getHoraFim()) <= 0)) {
+                        throw new Exception("Sala já ItemEquipamento nesse horário");
+                    }
+                }
+            }
+        }
+        BancoDeDados.gravaItemEquipamento(ItemEquipamento);
+        return true;
+
+    }
+
+    public boolean cancelarItemEquipamento(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception  {
+
+        ItemEquipamento ItemEquipamento = new ItemEquipamento();
+        ItemEquipamento.setDataReserva(dataReserva);
+        ItemEquipamento.setHoraInicio(horaInicio);
+        ItemEquipamento.setHoraFim(horaFim);
+        ItemEquipamento.setCodigoSalaReuniao(codigo);
+        ItemEquipamento.setCodigoPredio(codigoPredio);
+        ItemEquipamento.setCodigoCampus(codigoCampus);
+        return BancoDeDados.excluiItemEquipamento(ItemEquipamento);
+//        throw new Exception("Sala não ItemEquipamento nesse horário");
+
+    }
+   
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 3;

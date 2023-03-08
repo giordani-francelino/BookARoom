@@ -69,7 +69,7 @@ public class BookARoom {
                 // incluir e excluir reserva
             } else if (Integer.parseInt(s) == 3 || (Integer.parseInt(s) == 4)) {
                 int codigoPredio = 0;
-                int codigoSala = 0;
+                int codigoSalaReuniao = 0;
                 LocalDate dataReserva = LocalDate.now();
                 LocalTime horaInicio = LocalTime.now();
                 LocalTime horaFim = LocalTime.now();
@@ -78,7 +78,7 @@ public class BookARoom {
                 codigoPredio = Integer.parseInt(i);
                 System.out.print("Digite a sala:\n");
                 i = sc.next();
-                codigoSala = Integer.parseInt(i);
+                codigoSalaReuniao = Integer.parseInt(i);
                 System.out.print("Digite a data da reserva no formato 'aaaa-mm-dd':\n");
                 i = sc.next();
                 dataReserva = LocalDate.parse(i);
@@ -95,7 +95,7 @@ public class BookARoom {
                     System.out.print("Digite o assunto da reserva:\n");
                     assunto = sc.next();
                     try {
-                        f.efetuaReserva(codigoPredio, codigoSala, dataReserva,
+                        f.efetuaReserva(codigoPredio, codigoSalaReuniao, dataReserva,
                                 horaInicio, horaFim, assunto);
                         System.out.print("Reserva gravada com sucesso.\n");
                     } catch (Exception ex) {
@@ -103,12 +103,12 @@ public class BookARoom {
                     }
                     // cancelar reserva    
                 } else {
-                    b = f.cancelaReserva(codigoPredio, codigoSala, dataReserva,
-                            horaInicio, horaFim);
-                    if (b == true) {
-                        System.out.println("Reserva cancelada com sucesso");
-                    } else {
-                        System.out.println("Data/horário imdisponivél pra essa sala");
+                    try {
+                        f.cancelaReserva(codigoPredio, codigoSalaReuniao, dataReserva,
+                                horaInicio, horaFim);
+                        System.out.println("Reserva cancelada com sucesso\n");
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
                     }
 
                 }

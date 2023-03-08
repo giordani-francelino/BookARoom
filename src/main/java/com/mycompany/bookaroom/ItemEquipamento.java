@@ -25,9 +25,9 @@ import java.util.Objects;
  *
  * @author Your Name &lt;francelino at ifnmg&gt;
  */
-public class ItemEquipamentoReserva {
+public class ItemEquipamento {
 
-    private int codigo;
+    private int codigoEquipamento;
     private LocalDate dataReserva;
     private LocalTime horaInicio;
     private LocalTime horaFim;
@@ -35,15 +35,26 @@ public class ItemEquipamentoReserva {
     private int codigoPredio;
     private int codigoCampus;
     private String nomeEquipamento;
+    private int codigoFuncionario;
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
-    public int getCodigo() {
-        return codigo;
+
+    public int getCodigoEquipamento() {
+        return codigoEquipamento;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setCodigoEquipamento(int codigoEquipamento) {
+        this.codigoEquipamento = codigoEquipamento;
     }
+
+    public int getCodigoFuncionario() {
+        return codigoFuncionario;
+    }
+
+    public void setCodigoFuncionario(int codigoFuncionario) {
+        this.codigoFuncionario = codigoFuncionario;
+    }
+ 
 
     public LocalDate getDataReserva() {
         return dataReserva;
@@ -102,10 +113,13 @@ public class ItemEquipamentoReserva {
     }
 
 //</editor-fold>
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 29 * hash + this.codigo;
+        hash = 29 * hash + this.codigoEquipamento;
         hash = 29 * hash + Objects.hashCode(this.dataReserva);
         hash = 29 * hash + Objects.hashCode(this.horaInicio);
         hash = 29 * hash + Objects.hashCode(this.horaFim);

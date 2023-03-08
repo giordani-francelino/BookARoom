@@ -56,24 +56,23 @@ public class Funcionario {
     }
 
 //</editor-fold>
-    public boolean efetuaReserva(int codigoPredio, int codigoSala, LocalDate dataReserva,
+    public boolean efetuaReserva(int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
             LocalTime horaInicio, LocalTime horaFim, String assunto) throws Exception {
-        boolean b = false;
         SalaReuniao salaReuniao = new SalaReuniao();
-        salaReuniao.setCodigo(codigoSala);
+        salaReuniao.setCodigo(codigoSalaReuniao);
         salaReuniao.setCodigoPredio(codigoPredio);
         salaReuniao.setCodigoCampus(this.getCodigoCampus());
-        b = salaReuniao.gerarReserva( dataReserva,
-             horaInicio,  horaFim,  assunto,  codigo);    
-        return b;
-
+        return salaReuniao.gerarReserva(dataReserva,
+                horaInicio, horaFim, assunto, codigo);
     }
 
-    public boolean cancelaReserva(int codigoPredio, int codigoSala, LocalDate dataEvento,
-            LocalTime horaInicio, LocalTime horaFim) {
-        boolean b = false;
-
-        return b;
+    public boolean cancelaReserva(int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
+            LocalTime horaInicio, LocalTime horaFim) throws Exception {
+        SalaReuniao salaReuniao = new SalaReuniao();
+        salaReuniao.setCodigo(codigoSalaReuniao);
+        salaReuniao.setCodigoPredio(codigoPredio);
+        salaReuniao.setCodigoCampus(this.getCodigoCampus());
+        return salaReuniao.cancelarReserva(dataReserva, horaInicio, horaFim);
     }
 
     @Override

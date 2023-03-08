@@ -104,7 +104,7 @@ public class SalaReuniao {
 
     }
 
-    public boolean cancelarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
+    public boolean cancelarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception  {
 
         Reserva reserva = new Reserva();
         reserva.setDataReserva(dataReserva);
@@ -113,7 +113,6 @@ public class SalaReuniao {
         reserva.setCodigoSalaReuniao(codigo);
         reserva.setCodigoPredio(codigoPredio);
         reserva.setCodigoCampus(codigoCampus);
-
         return BancoDeDados.excluiReserva(reserva);
 //        throw new Exception("Sala não reserva nesse horário");
 
