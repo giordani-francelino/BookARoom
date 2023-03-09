@@ -42,7 +42,7 @@ public class BancoDeDados {
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
-            for (int codigoPredio = 1; codigoPredio < 6; codigoPredio++) {
+            for (int codigoPredio = 1; codigoPredio < 4; codigoPredio++) {
                 Predio predio = new Predio();
                 predio.setCodigo(codigoPredio);
                 predio.setCodigoCampus(codigoCampus);
@@ -54,17 +54,28 @@ public class BancoDeDados {
 
                 }
 //              inclui salas para teste
-                for (int codigoSalaReuniao = 1; codigoSalaReuniao < 11; codigoSalaReuniao++) {
+                for (int codigoSalaReuniao = 1; codigoSalaReuniao < 4; codigoSalaReuniao++) {
                     SalaReuniao salaReuniao = new SalaReuniao();
                     salaReuniao.setCodigo(codigoSalaReuniao);
                     salaReuniao.setCodigoPredio(codigoPredio);
                     salaReuniao.setCodigoCampus(codigoCampus);
-                    salaReuniao.setNumLugares(30 + codigoSalaReuniao + codigoPredio + codigoCampus);
-
+                    salaReuniao.setNumLugares(20 + codigoSalaReuniao + codigoPredio + codigoCampus);
                     try {
                         BancoDeDados.gravaSalaReuniao(salaReuniao);
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
+                    }
+                    for (int reserva = 1; reserva < 5; reserva++) {
+                        for (int item = 1; item < 3; item++) {
+                            int i = 0;
+                            i = i + item + item * 1;
+                            i = i + reserva + reserva * 10;
+                            i = i + codigoSalaReuniao * codigoSalaReuniao * 100;
+                            i = i + codigoPredio * 1000;
+                            System.out.println(i);
+
+                        }
+
                     }
 
                 }
@@ -81,7 +92,7 @@ public class BancoDeDados {
                 }
 
             }
-            for (int codigoEquipamento = 1; codigoEquipamento < 100; codigoEquipamento++) {
+            for (int codigoEquipamento = 1000; codigoEquipamento < 4001; codigoEquipamento++) {
                 Equipamento equipamento = new Equipamento();
                 equipamento.setCodigo(codigoEquipamento);
                 equipamento.setCodigoCampus(codigoCampus);
@@ -349,10 +360,10 @@ public class BancoDeDados {
         return true;
     }
 
-    public static Equipamento recuperaEquipamento(int codigoEquipamento,int codigoCampus) throws Exception {
+    public static Equipamento recuperaEquipamento(int codigoEquipamento, int codigoCampus) throws Exception {
         for (Iterator<Equipamento> iterator = equipamentos.iterator(); iterator.hasNext();) {
             Equipamento c = iterator.next();
-            if (c.getCodigo() == codigoEquipamento&&c.getCodigoCampus() == codigoCampus) {
+            if (c.getCodigo() == codigoEquipamento && c.getCodigoCampus() == codigoCampus) {
                 return c;
             }
         }
@@ -411,11 +422,11 @@ public class BancoDeDados {
         for (Iterator<Reserva> iterator = reservas.iterator(); iterator.hasNext();) {
             Reserva c = iterator.next();
             if (c.getCodigoSalaReuniao() == codigoSalaReuniao
-                    && c.getCodigoPredio()== codigoPredio 
-                    && c.getCodigoCampus() == codigoCampus 
-                    && c.getDataReserva()== dataReserva 
-                    && c.getHoraInicio()== horaInicio 
-                    && c.getHoraFim()== horaFim) {
+                    && c.getCodigoPredio() == codigoPredio
+                    && c.getCodigoCampus() == codigoCampus
+                    && c.getDataReserva() == dataReserva
+                    && c.getHoraInicio() == horaInicio
+                    && c.getHoraFim() == horaFim) {
                 return c;
             }
         }
@@ -467,17 +478,17 @@ public class BancoDeDados {
         return true;
     }
 
-    public static ItemEquipamento recuperaItemEquipamento(int codigo,int codigoSalaReuniao, int codigoPredio,
+    public static ItemEquipamento recuperaItemEquipamento(int codigo, int codigoSalaReuniao, int codigoPredio,
             int codigoCampus, LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
         for (Iterator<ItemEquipamento> iterator = itemEquipamentos.iterator(); iterator.hasNext();) {
             ItemEquipamento c = iterator.next();
-            if (c.getCodigoEquipamento() ==codigo
+            if (c.getCodigoEquipamento() == codigo
                     && c.getCodigoSalaReuniao() == codigoSalaReuniao
-                    && c.getCodigoPredio()== codigoPredio 
-                    && c.getCodigoCampus() == codigoCampus 
-                    && c.getDataReserva()== dataReserva 
-                    && c.getHoraInicio()== horaInicio 
-                    && c.getHoraFim()== horaFim) {
+                    && c.getCodigoPredio() == codigoPredio
+                    && c.getCodigoCampus() == codigoCampus
+                    && c.getDataReserva() == dataReserva
+                    && c.getHoraInicio() == horaInicio
+                    && c.getHoraFim() == horaFim) {
                 return c;
             }
         }
