@@ -33,6 +33,7 @@ public class BancoDeDados {
             return;
         }
         for (int codigoCampus = 1; codigoCampus < 4; codigoCampus++) {
+            int item = 1;
             Campus campus = new Campus();
             campus.setCodigo(codigoCampus);
             campus.setNome("Campus " + codigoCampus);
@@ -65,18 +66,37 @@ public class BancoDeDados {
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                     }
-                    for (int reserva = 1; reserva < 5; reserva++) {
-                        for (int item = 1; item < 3; item++) {
-                            int i = 0;
-                            i = i + item + item * 1;
-                            i = i + reserva + reserva * 10;
-                            i = i + codigoSalaReuniao * codigoSalaReuniao * 100;
-                            i = i + codigoPredio * 1000;
-                            System.out.println(i);
-
-                        }
-
+                    
+                    Reserva reserva = new Reserva();
+                    reserva.setDataReserva(LocalDate.now());
+                    reserva.setHoraInicio(LocalTime.parse("11:00"));
+                    reserva.setHoraFim(LocalTime.parse("12:00"));
+                    reserva.setCodigoSalaReuniao(salaReuniao.getCodigo());
+                    reserva.setCodigoPredio(salaReuniao.getCodigoPredio());
+                    reserva.setCodigoCampus(salaReuniao.getCodigoCampus());
+                    reserva.setAssunto("Teste " + codigoSalaReuniao);
+                    try {
+                        BancoDeDados.gravaReserva(reserva);
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
                     }
+                    
+                    ItemEquipamento itemEquipamento = new ItemEquipamento();
+                    itemEquipamento.setCodigoEquipamento(item);
+                    itemEquipamento.setDataReserva(LocalDate.now());
+                    itemEquipamento.setHoraInicio(LocalTime.parse("11:00"));
+                    itemEquipamento.setHoraFim(LocalTime.parse("12:00"));
+                    itemEquipamento.setCodigoSalaReuniao(salaReuniao.getCodigo());
+                    itemEquipamento.setCodigoPredio(salaReuniao.getCodigoPredio());
+                    itemEquipamento.setCodigoCampus(salaReuniao.getCodigoCampus());
+                    itemEquipamento.setNomeEquipamento("Equipamento " + item + " - Campus " + codigoCampus);
+                    item++;
+                    try {
+                        BancoDeDados.gravaItemEquipamento(itemEquipamento);
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    
 
                 }
             }
@@ -92,7 +112,7 @@ public class BancoDeDados {
                 }
 
             }
-            for (int codigoEquipamento = 1000; codigoEquipamento < 4001; codigoEquipamento++) {
+            for (int codigoEquipamento = 1; codigoEquipamento < 200; codigoEquipamento++) {
                 Equipamento equipamento = new Equipamento();
                 equipamento.setCodigo(codigoEquipamento);
                 equipamento.setCodigoCampus(codigoCampus);
@@ -115,7 +135,7 @@ public class BancoDeDados {
     private static ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
     private static ArrayList<Equipamento> equipamentos = new ArrayList<Equipamento>();
     private static ArrayList<Reserva> reservas = new ArrayList<Reserva>();
-    private static ArrayList<ItemEquipamento> itemEquipamentos;
+    private static ArrayList<ItemEquipamento> itemEquipamentos=new ArrayList<ItemEquipamento>();
 
 //<editor-fold defaultstate="collapsed" desc="crud campus">
     public static boolean consultaCampus(Campus campus) {

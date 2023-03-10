@@ -56,23 +56,10 @@ public class Funcionario {
     }
 
 //</editor-fold>
-    public boolean efetuaReserva(int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
-            LocalTime horaInicio, LocalTime horaFim, String assunto) throws Exception {
-        SalaReuniao salaReuniao = new SalaReuniao();
-        salaReuniao.setCodigo(codigoSalaReuniao);
-        salaReuniao.setCodigoPredio(codigoPredio);
-        salaReuniao.setCodigoCampus(this.getCodigoCampus());
-        return salaReuniao.gerarReserva(dataReserva,
-                horaInicio, horaFim, assunto, codigo);
-    }
 
-    public boolean cancelaReserva(int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
-            LocalTime horaInicio, LocalTime horaFim) throws Exception {
-        SalaReuniao salaReuniao = new SalaReuniao();
-        salaReuniao.setCodigo(codigoSalaReuniao);
-        salaReuniao.setCodigoPredio(codigoPredio);
-        salaReuniao.setCodigoCampus(this.getCodigoCampus());
-        return salaReuniao.cancelarReserva(dataReserva, horaInicio, horaFim);
+    @Override
+    public String toString() {
+        return "Funcionario{" + "codigo=" + codigo + ", nome=" + nome + '}';
     }
 
     @Override

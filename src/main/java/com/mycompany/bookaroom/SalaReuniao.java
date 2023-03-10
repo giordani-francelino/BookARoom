@@ -67,55 +67,55 @@ public class SalaReuniao {
     }
 //</editor-fold>
 
-    
-    public boolean gerarReserva(LocalDate dataReserva,
-            LocalTime horaInicio, LocalTime horaFim, String assunto, int codigoFuncionario) throws Exception {
-        if (!BancoDeDados.consultaSalaReuniao(this)) {
-            throw new Exception("Sala não cadastrada.");
-        }
-        Reserva reserva = new Reserva();
-        reserva.setDataReserva(dataReserva);
-        reserva.setHoraInicio(horaInicio);
-        reserva.setHoraFim(horaFim);
-        reserva.setCodigoSalaReuniao(codigo);
-        reserva.setCodigoPredio(codigoPredio);
-        reserva.setCodigoCampus(codigoCampus);
-        reserva.setAssunto(assunto);
-        reserva.setCodigoFuncionario(codigoFuncionario);
-   
-//data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
-//data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
-//data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
-        ArrayList<Reserva> reservas = BancoDeDados.listaReserva(codigoCampus);
-        for (Reserva c : reservas) {
-            if (c.getCodigoSalaReuniao() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
-                if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
-                    if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
-                            && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
-                            || (reserva.getHoraFim().compareTo(c.getHoraInicio()) >= 0
-                            && reserva.getHoraFim().compareTo(c.getHoraFim()) <= 0)) {
-                        throw new Exception("Sala já reserva nesse horário");
-                    }
-                }
-            }
-        }
-        BancoDeDados.gravaReserva(reserva);
-        return true;
-
-    }
-
-    public boolean cancelarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception  {
-
-        Reserva reserva = new Reserva();
-        reserva.setDataReserva(dataReserva);
-        reserva.setHoraInicio(horaInicio);
-        reserva.setHoraFim(horaFim);
-        reserva.setCodigoSalaReuniao(codigo);
-        reserva.setCodigoPredio(codigoPredio);
-        reserva.setCodigoCampus(codigoCampus);
-        return BancoDeDados.excluiReserva(reserva);
-    }
-
+//    
+//    public boolean gerarReserva(LocalDate dataReserva,
+//            LocalTime horaInicio, LocalTime horaFim, String assunto, int codigoFuncionario) throws Exception {
+//        if (!BancoDeDados.consultaSalaReuniao(this)) {
+//            throw new Exception("Sala não cadastrada.");
+//        }
+//        Reserva reserva = new Reserva();
+//        reserva.setDataReserva(dataReserva);
+//        reserva.setHoraInicio(horaInicio);
+//        reserva.setHoraFim(horaFim);
+//        reserva.setCodigoSalaReuniao(codigo);
+//        reserva.setCodigoPredio(codigoPredio);
+//        reserva.setCodigoCampus(codigoCampus);
+//        reserva.setAssunto(assunto);
+//        reserva.setCodigoFuncionario(codigoFuncionario);
+//   
+////data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
+////data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
+////data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
+//        ArrayList<Reserva> reservas = BancoDeDados.listaReserva(codigoCampus);
+//        for (Reserva c : reservas) {
+//            if (c.getCodigoSalaReuniao() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+//                if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
+//                    if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
+//                            && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
+//                            || (reserva.getHoraFim().compareTo(c.getHoraInicio()) >= 0
+//                            && reserva.getHoraFim().compareTo(c.getHoraFim()) <= 0)) {
+//                        throw new Exception("Sala já reserva nesse horário");
+//                    }
+//                }
+//            }
+//        }
+//        BancoDeDados.gravaReserva(reserva);
+//        return true;
+//
+//    }
+//
+//    public boolean cancelarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception  {
+//
+//        Reserva reserva = new Reserva();
+//        reserva.setDataReserva(dataReserva);
+//        reserva.setHoraInicio(horaInicio);
+//        reserva.setHoraFim(horaFim);
+//        reserva.setCodigoSalaReuniao(codigo);
+//        reserva.setCodigoPredio(codigoPredio);
+//        reserva.setCodigoCampus(codigoCampus);
+//        return BancoDeDados.excluiReserva(reserva);
+//    }
+//
     @Override
     public int hashCode() {
         int hash = 5;

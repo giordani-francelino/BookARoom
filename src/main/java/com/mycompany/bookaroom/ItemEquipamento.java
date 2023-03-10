@@ -35,7 +35,6 @@ public class ItemEquipamento {
     private int codigoPredio;
     private int codigoCampus;
     private String nomeEquipamento;
-    private int codigoFuncionario;
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
 
@@ -46,15 +45,6 @@ public class ItemEquipamento {
     public void setCodigoEquipamento(int codigoEquipamento) {
         this.codigoEquipamento = codigoEquipamento;
     }
-
-    public int getCodigoFuncionario() {
-        return codigoFuncionario;
-    }
-
-    public void setCodigoFuncionario(int codigoFuncionario) {
-        this.codigoFuncionario = codigoFuncionario;
-    }
- 
 
     public LocalDate getDataReserva() {
         return dataReserva;

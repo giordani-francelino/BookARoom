@@ -66,6 +66,7 @@ public class Equipamento {
     }
 
 //</editor-fold>
+
     public boolean gerarReservaEquipamento(int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
             LocalTime horaInicio, LocalTime horaFim, int codigoFuncionario) throws Exception {
         if (!BancoDeDados.consultaEquipamento(this)) {
@@ -80,7 +81,6 @@ public class Equipamento {
         ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
         ItemEquipamento.setCodigoPredio(codigoPredio);
         ItemEquipamento.setCodigoCampus(codigoCampus);
-        ItemEquipamento.setCodigoFuncionario(codigoFuncionario);
 
 //data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
 //data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0

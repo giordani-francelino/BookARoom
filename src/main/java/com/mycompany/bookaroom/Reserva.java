@@ -34,8 +34,7 @@ public class Reserva {
     private int codigoPredio;
     private int codigoCampus;
     private String assunto;
-    private int codigoFuncionario;
-    private String nomeFuncionario;
+    private Funcionario funcionario;
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
     public LocalDate getDataReserva() {
@@ -95,32 +94,32 @@ public class Reserva {
         this.assunto = assunto;
     }
 
-    public int getCodigoFuncionario() {
-        return codigoFuncionario;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setCodigoFuncionario(int codigoFuncionario) {
-        this.codigoFuncionario = codigoFuncionario;
-    }
-
-    public String getNomeFuncionario() {
-        return nomeFuncionario;
-    }
-
-    public void setNomeFuncionario(String nomeFuncionario) {
-        this.nomeFuncionario = nomeFuncionario;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
 
     
     //</editor-fold>
 
-    public void inserirItemEquipamentoReserva() {
-
+    public boolean inserirItemEquipamento(Equipamento equipamento) {
+        return false;
     }
 
-    public void excluirItemEquipamentoReserva() {
+    public boolean excluirItemEquipamento(Equipamento equipamento) {
+        return false;
+    }
 
+    @Override
+    public String toString() {
+        return "Reserva{" + "Data=" + dataReserva + ", Hora início=" + horaInicio 
+                + ", Hora fim=" + horaFim + ", Sala=" + codigoSalaReuniao 
+                + ", Predio=" + codigoPredio + ", Campus=" + codigoCampus 
+                + ", Assunto=" + assunto + ", " + funcionario + '}';
     }
 
 

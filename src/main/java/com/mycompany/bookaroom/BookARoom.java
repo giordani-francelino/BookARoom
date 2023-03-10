@@ -19,6 +19,8 @@ public class BookARoom {
     private static BancoDeDados bd1 = new BancoDeDados();
     private static Equipamento equipamento = new Equipamento();
     private static SalaReuniao salaReuniao = new SalaReuniao();
+    private static RegistradorReserva registradorReserva = new RegistradorReserva();
+    private static Reserva reserva = new Reserva();
     private static int codigoPredio = 0;
     private static int codigoSalaReuniao = 0;
     private static LocalDate dataReserva = LocalDate.now();
@@ -77,8 +79,11 @@ public class BookARoom {
                 System.out.print("Digite o assunto da reserva:\n");
                 assunto = sc.next();
                 try {
-                    salaReuniao.gerarReserva(dataReserva, horaInicio, horaFim, assunto, funcionario);
+                    registradorReserva.setSalaReuniao(salaReuniao);
+                    registradorReserva.setFuncionario(f);
+                    reserva = registradorReserva.gerarReserva( dataReserva, horaInicio, horaFim, assunto);
                     System.out.print("Reserva gravada com sucesso.\n");
+                    System.out.println(reserva + "\n");
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -87,7 +92,7 @@ public class BookARoom {
                 obterDadosReserva();
 
                 try {
-                    salaReuniao.cancelarReserva(dataReserva, horaInicio, horaFim);
+                    registradorReserva.cancelarReserva(salaReuniao,dataReserva, horaInicio, horaFim);
                     System.out.println("Reserva cancelada com sucesso\n");
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
