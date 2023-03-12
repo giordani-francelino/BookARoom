@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  *
@@ -29,8 +30,7 @@ import java.util.Iterator;
 public class SalaReuniao {
 
     private int codigo;
-    private int codigoPredio;
-    private int codigoCampus;
+    private Predio predio = new Predio();
     private int numLugares;
 //<editor-fold defaultstate="collapsed" desc="getters and setters">
 
@@ -42,20 +42,12 @@ public class SalaReuniao {
         this.codigo = codigo;
     }
 
-    public int getCodigoPredio() {
-        return codigoPredio;
+    public Predio getPredio() {
+        return predio;
     }
 
-    public void setCodigoPredio(int codigoPredio) {
-        this.codigoPredio = codigoPredio;
-    }
-
-    public int getCodigoCampus() {
-        return codigoCampus;
-    }
-
-    public void setCodigoCampus(int codigoCampus) {
-        this.codigoCampus = codigoCampus;
+    public void setPredio(Predio predio) {
+        this.predio = predio;
     }
 
     public int getNumLugares() {
@@ -67,61 +59,17 @@ public class SalaReuniao {
     }
 //</editor-fold>
 
-//    
-//    public boolean gerarReserva(LocalDate dataReserva,
-//            LocalTime horaInicio, LocalTime horaFim, String assunto, int codigoFuncionario) throws Exception {
-//        if (!BancoDeDados.consultaSalaReuniao(this)) {
-//            throw new Exception("Sala não cadastrada.");
-//        }
-//        Reserva reserva = new Reserva();
-//        reserva.setDataReserva(dataReserva);
-//        reserva.setHoraInicio(horaInicio);
-//        reserva.setHoraFim(horaFim);
-//        reserva.setCodigoSalaReuniao(codigo);
-//        reserva.setCodigoPredio(codigoPredio);
-//        reserva.setCodigoCampus(codigoCampus);
-//        reserva.setAssunto(assunto);
-//        reserva.setCodigoFuncionario(codigoFuncionario);
-//   
-////data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
-////data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
-////data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
-//        ArrayList<Reserva> reservas = BancoDeDados.listaReserva(codigoCampus);
-//        for (Reserva c : reservas) {
-//            if (c.getCodigoSalaReuniao() == codigo && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
-//                if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
-//                    if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
-//                            && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
-//                            || (reserva.getHoraFim().compareTo(c.getHoraInicio()) >= 0
-//                            && reserva.getHoraFim().compareTo(c.getHoraFim()) <= 0)) {
-//                        throw new Exception("Sala já reserva nesse horário");
-//                    }
-//                }
-//            }
-//        }
-//        BancoDeDados.gravaReserva(reserva);
-//        return true;
-//
-//    }
-//
-//    public boolean cancelarReserva(LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception  {
-//
-//        Reserva reserva = new Reserva();
-//        reserva.setDataReserva(dataReserva);
-//        reserva.setHoraInicio(horaInicio);
-//        reserva.setHoraFim(horaFim);
-//        reserva.setCodigoSalaReuniao(codigo);
-//        reserva.setCodigoPredio(codigoPredio);
-//        reserva.setCodigoCampus(codigoCampus);
-//        return BancoDeDados.excluiReserva(reserva);
-//    }
-//
+    @Override
+    public String toString() {
+        return "SalaReuniao{" + "codigo=" + codigo + ", predio=" + predio + ", numLugares=" + numLugares + '}';
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.codigo;
-        hash = 97 * hash + this.codigoPredio;
-        hash = 97 * hash + this.codigoCampus;
+        int hash = 3;
+        hash = 71 * hash + this.codigo;
+        hash = 71 * hash + this.predio.getCodigo();
+        hash = 71 * hash + this.predio.getCampus().getCodigo();
         return hash;
     }
 
@@ -140,12 +88,8 @@ public class SalaReuniao {
 //        if (this.codigo != other.codigo) {
 //            return false;
 //        }
-//        if (this.codigoPredio != other.codigoPredio) {
-//            return false;
-//        }
-//        return this.codigoCampus == other.codigoCampus;
+//        return Objects.equals(this.predio, other.predio);
         return hashCode() == obj.hashCode();
-
     }
 
 }

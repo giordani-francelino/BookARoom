@@ -46,7 +46,7 @@ public class BancoDeDados {
             for (int codigoPredio = 1; codigoPredio < 4; codigoPredio++) {
                 Predio predio = new Predio();
                 predio.setCodigo(codigoPredio);
-                predio.setCodigoCampus(codigoCampus);
+                predio.setCampus(campus);
                 predio.setNome("Prédio" + codigoPredio + " - Campus " + codigoCampus);
                 try {
                     BancoDeDados.gravaPredio(predio);
@@ -58,8 +58,7 @@ public class BancoDeDados {
                 for (int codigoSalaReuniao = 1; codigoSalaReuniao < 4; codigoSalaReuniao++) {
                     SalaReuniao salaReuniao = new SalaReuniao();
                     salaReuniao.setCodigo(codigoSalaReuniao);
-                    salaReuniao.setCodigoPredio(codigoPredio);
-                    salaReuniao.setCodigoCampus(codigoCampus);
+                    salaReuniao.setPredio(predio);
                     salaReuniao.setNumLugares(20 + codigoSalaReuniao + codigoPredio + codigoCampus);
                     try {
                         BancoDeDados.gravaSalaReuniao(salaReuniao);
@@ -71,9 +70,7 @@ public class BancoDeDados {
                     reserva.setDataReserva(LocalDate.now());
                     reserva.setHoraInicio(LocalTime.parse("11:00"));
                     reserva.setHoraFim(LocalTime.parse("12:00"));
-                    reserva.setCodigoSalaReuniao(salaReuniao.getCodigo());
-                    reserva.setCodigoPredio(salaReuniao.getCodigoPredio());
-                    reserva.setCodigoCampus(salaReuniao.getCodigoCampus());
+                    reserva.setSalaReuniao(salaReuniao);
                     reserva.setAssunto("Teste " + codigoSalaReuniao);
                     try {
                         BancoDeDados.gravaReserva(reserva);
@@ -82,14 +79,12 @@ public class BancoDeDados {
                     }
                     
                     ItemEquipamento itemEquipamento = new ItemEquipamento();
-                    itemEquipamento.setCodigoEquipamento(item);
+                    itemEquipamento.getEquipamento().setCodigo(item);
                     itemEquipamento.setDataReserva(LocalDate.now());
                     itemEquipamento.setHoraInicio(LocalTime.parse("11:00"));
                     itemEquipamento.setHoraFim(LocalTime.parse("12:00"));
-                    itemEquipamento.setCodigoSalaReuniao(salaReuniao.getCodigo());
-                    itemEquipamento.setCodigoPredio(salaReuniao.getCodigoPredio());
-                    itemEquipamento.setCodigoCampus(salaReuniao.getCodigoCampus());
-                    itemEquipamento.setNomeEquipamento("Equipamento " + item + " - Campus " + codigoCampus);
+                    itemEquipamento.setSalaReuniao(salaReuniao);
+                    itemEquipamento.getEquipamento().setNome("Equipamento " + item + " - Campus " + codigoCampus);
                     item++;
                     try {
                         BancoDeDados.gravaItemEquipamento(itemEquipamento);
@@ -103,7 +98,7 @@ public class BancoDeDados {
             for (int codigoFuncionario = 1; codigoFuncionario < 11; codigoFuncionario++) {
                 Funcionario funcionario = new Funcionario();
                 funcionario.setCodigo(codigoFuncionario);
-                funcionario.setCodigoCampus(codigoCampus);
+                funcionario.getCampus().setCodigo(codigoCampus);
                 funcionario.setNome("Funcioánrio " + codigoFuncionario + " - Campus " + codigoCampus);
                 try {
                     BancoDeDados.gravaFuncionario(funcionario);
@@ -115,7 +110,7 @@ public class BancoDeDados {
             for (int codigoEquipamento = 1; codigoEquipamento < 200; codigoEquipamento++) {
                 Equipamento equipamento = new Equipamento();
                 equipamento.setCodigo(codigoEquipamento);
-                equipamento.setCodigoCampus(codigoCampus);
+                equipamento.getCampus().setCodigo(codigoCampus);
                 equipamento.setNome("Equipamento " + codigoEquipamento + " - Campus " + codigoCampus);
                 try {
                     BancoDeDados.gravaEquipamento(equipamento);
@@ -216,7 +211,7 @@ public class BancoDeDados {
     public static Predio recuperaPredio(int codigoPredio, int codigoCampus) throws Exception {
         for (Iterator<Predio> iterator = predios.iterator(); iterator.hasNext();) {
             Predio c = iterator.next();
-            if (c.getCodigo() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+            if (c.getCodigo() == codigoPredio && c.getCampus().getCodigo() == codigoCampus) {
                 return c;
             }
         }
@@ -227,7 +222,7 @@ public class BancoDeDados {
 
         ArrayList<Predio> p = new ArrayList<Predio>();
         for (Predio c : predios) {
-            if (c.getCodigoCampus() == codigoCampus) {
+            if (c.getCampus().getCodigo() == codigoCampus) {
                 p.add(c);
             }
         }
@@ -248,7 +243,7 @@ public class BancoDeDados {
 
     public static boolean gravaSalaReuniao(SalaReuniao salaReuniao) throws Exception {
         if (consultaSalaReuniao(salaReuniao)) {
-            throw new Exception("SalaReuniao já cadastrado.");
+            throw new Exception("SalaReuniao já cadastrada." + salaReuniao);
         }
         salaReuniaos.add(salaReuniao);
         return true;
@@ -272,8 +267,8 @@ public class BancoDeDados {
             int codigoCampus) throws Exception {
         for (Iterator<SalaReuniao> iterator = salaReuniaos.iterator(); iterator.hasNext();) {
             SalaReuniao c = iterator.next();
-            if (c.getCodigo() == codigoSalaReuniao && c.getCodigoPredio()
-                    == codigoPredio && c.getCodigoCampus() == codigoCampus) {
+            if (c.getCodigo() == codigoSalaReuniao && c.getPredio().getCodigo()
+                    == codigoPredio && c.getPredio().getCampus().getCodigo() == codigoCampus) {
                 return c;
             }
         }
@@ -284,7 +279,7 @@ public class BancoDeDados {
 
         ArrayList<SalaReuniao> p = new ArrayList<SalaReuniao>();
         for (SalaReuniao c : salaReuniaos) {
-            if (c.getCodigoCampus() == codigoCampus) {
+            if (c.getPredio().getCampus().getCodigo() == codigoCampus) {
                 p.add(c);
             }
         }
@@ -328,7 +323,7 @@ public class BancoDeDados {
     public static Funcionario recuperaFuncionario(int codigoFuncionario, int codigoCampus) throws Exception {
         for (Iterator<Funcionario> iterator = funcionarios.iterator(); iterator.hasNext();) {
             Funcionario c = iterator.next();
-            if (c.getCodigo() == codigoFuncionario && c.getCodigoCampus() == codigoCampus) {
+            if (c.getCodigo() == codigoFuncionario && c.getCampus().getCodigo() == codigoCampus) {
                 return c;
             }
         }
@@ -339,7 +334,7 @@ public class BancoDeDados {
 
         ArrayList<Funcionario> p = new ArrayList<Funcionario>();
         for (Funcionario c : funcionarios) {
-            if (c.getCodigoCampus() == codigoCampus) {
+            if (c.getCampus().getCodigo() == codigoCampus) {
                 p.add(c);
             }
         }
@@ -383,7 +378,7 @@ public class BancoDeDados {
     public static Equipamento recuperaEquipamento(int codigoEquipamento, int codigoCampus) throws Exception {
         for (Iterator<Equipamento> iterator = equipamentos.iterator(); iterator.hasNext();) {
             Equipamento c = iterator.next();
-            if (c.getCodigo() == codigoEquipamento && c.getCodigoCampus() == codigoCampus) {
+            if (c.getCodigo() == codigoEquipamento && c.getCampus().getCodigo() == codigoCampus) {
                 return c;
             }
         }
@@ -394,7 +389,7 @@ public class BancoDeDados {
 
         ArrayList<Equipamento> p = new ArrayList<Equipamento>();
         for (Equipamento c : equipamentos) {
-            if (c.getCodigoCampus() == codigoCampus) {
+            if (c.getCampus().getCodigo() == codigoCampus) {
                 p.add(c);
             }
         }
@@ -441,9 +436,9 @@ public class BancoDeDados {
             int codigoCampus, LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
         for (Iterator<Reserva> iterator = reservas.iterator(); iterator.hasNext();) {
             Reserva c = iterator.next();
-            if (c.getCodigoSalaReuniao() == codigoSalaReuniao
-                    && c.getCodigoPredio() == codigoPredio
-                    && c.getCodigoCampus() == codigoCampus
+            if (c.getSalaReuniao().getCodigo() == codigoSalaReuniao
+                    && c.getSalaReuniao().getPredio().getCodigo() == codigoPredio
+                    && c.getSalaReuniao().getPredio().getCampus().getCodigo() == codigoCampus
                     && c.getDataReserva() == dataReserva
                     && c.getHoraInicio() == horaInicio
                     && c.getHoraFim() == horaFim) {
@@ -457,7 +452,7 @@ public class BancoDeDados {
 
         ArrayList<Reserva> p = new ArrayList<Reserva>();
         for (Reserva c : reservas) {
-            if (c.getCodigoCampus() == codigoCampus) {
+            if (c.getSalaReuniao().getPredio().getCampus().getCodigo() == codigoCampus) {
                 p.add(c);
             }
         }
@@ -502,10 +497,10 @@ public class BancoDeDados {
             int codigoCampus, LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
         for (Iterator<ItemEquipamento> iterator = itemEquipamentos.iterator(); iterator.hasNext();) {
             ItemEquipamento c = iterator.next();
-            if (c.getCodigoEquipamento() == codigo
-                    && c.getCodigoSalaReuniao() == codigoSalaReuniao
-                    && c.getCodigoPredio() == codigoPredio
-                    && c.getCodigoCampus() == codigoCampus
+            if (c.getEquipamento().getCodigo() == codigo
+                    && c.getSalaReuniao().getCodigo() == codigoSalaReuniao
+                    && c.getSalaReuniao().getPredio().getCodigo() == codigoPredio
+                    && c.getSalaReuniao().getPredio().getCampus().getCodigo() == codigoCampus
                     && c.getDataReserva() == dataReserva
                     && c.getHoraInicio() == horaInicio
                     && c.getHoraFim() == horaFim) {
@@ -519,7 +514,7 @@ public class BancoDeDados {
 
         ArrayList<ItemEquipamento> p = new ArrayList<ItemEquipamento>();
         for (ItemEquipamento c : itemEquipamentos) {
-            if (c.getCodigoCampus() == codigoCampus) {
+            if (c.getEquipamento().getCampus().getCodigo()== codigoCampus) {
                 p.add(c);
             }
         }

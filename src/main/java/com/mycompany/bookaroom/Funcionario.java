@@ -19,6 +19,7 @@ package com.mycompany.bookaroom;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  *
@@ -27,7 +28,7 @@ import java.time.LocalTime;
 public class Funcionario {
 
     private int codigo;
-    private int codigoCampus;
+    private Campus campus = new Campus();
     private String nome;
 
 //<editor-fold defaultstate="collapsed" desc="getters and setters">
@@ -39,12 +40,12 @@ public class Funcionario {
         this.codigo = codigo;
     }
 
-    public int getCodigoCampus() {
-        return codigoCampus;
+    public Campus getCampus() {
+        return campus;
     }
 
-    public void setCodigoCampus(int codigoCampus) {
-        this.codigoCampus = codigoCampus;
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
 
     public String getNome() {
@@ -64,9 +65,9 @@ public class Funcionario {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + this.codigo;
-        hash = 41 * hash + this.codigoCampus;
+        int hash = 5;
+        hash = 79 * hash + this.codigo;
+        hash = 79 * hash + Objects.hashCode(this.campus);
         return hash;
     }
 
@@ -85,9 +86,8 @@ public class Funcionario {
 //        if (this.codigo != other.codigo) {
 //            return false;
 //        }
-//        return this.codigoCampus == other.codigoCampus;
+//        return Objects.equals(this.campus, other.campus);
         return hashCode() == obj.hashCode();
-
     }
 
 }

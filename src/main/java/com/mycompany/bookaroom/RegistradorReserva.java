@@ -27,54 +27,40 @@ import java.util.ArrayList;
  */
 public class RegistradorReserva {
 
-    private SalaReuniao salaReuniao;
-    private Funcionario funcionario;
-    
+    private Reserva reserva = new Reserva();
+    private ItemEquipamento itemEquipamento = new ItemEquipamento();
+
+    public Reserva getReserva() {
+        return reserva;
+
+    }
+
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
+    }
+
+    public ItemEquipamento getItemEquipamento() {
+        return itemEquipamento;
+    }
+
 //<editor-fold defaultstate="collapsed" desc="geters and setters">
-
-    public SalaReuniao getSalaReuniao() {
-        return salaReuniao;
+    public void setItemEquipamento(ItemEquipamento itemEquipamento) {
+        this.itemEquipamento = itemEquipamento;
     }
 
-    public void setSalaReuniao(SalaReuniao salaReuniao) {
-        this.salaReuniao = salaReuniao;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-    
-    
-    
 //</editor-fold>
-    
-    public Reserva gerarReserva(LocalDate dataReserva,
-            LocalTime horaInicio, LocalTime horaFim, String assunto) throws Exception {
-        if (!BancoDeDados.consultaSalaReuniao(salaReuniao)) {
+    public boolean gerarReserva() throws Exception {
+        if (!BancoDeDados.consultaSalaReuniao(reserva.getSalaReuniao())) {
             throw new Exception("Sala não cadastrada.");
         }
-        Reserva reserva = new Reserva();
-        reserva.setDataReserva(dataReserva);
-        reserva.setHoraInicio(horaInicio);
-        reserva.setHoraFim(horaFim);
-        reserva.setCodigoSalaReuniao(salaReuniao.getCodigo());
-        reserva.setCodigoPredio(salaReuniao.getCodigoPredio());
-        reserva.setCodigoCampus(salaReuniao.getCodigoCampus());
-        reserva.setAssunto(assunto);
-        reserva.setFuncionario(funcionario);
 
 //data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
 //data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
 //data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
-        ArrayList<Reserva> reservas = BancoDeDados.listaReserva(salaReuniao.getCodigoCampus());
+        ArrayList<Reserva> reservas
+                = BancoDeDados.listaReserva(reserva.getSalaReuniao().getPredio().getCampus().getCodigo());
         for (Reserva c : reservas) {
-            if (c.getCodigoSalaReuniao() == salaReuniao.getCodigo()
-                    && c.getCodigoPredio() == salaReuniao.getCodigoPredio()
-                    && c.getCodigoCampus() == salaReuniao.getCodigoCampus()) {
+            if (c.getSalaReuniao() == reserva.getSalaReuniao()) {
                 if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
                     if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
                             && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
@@ -86,70 +72,81 @@ public class RegistradorReserva {
             }
         }
         BancoDeDados.gravaReserva(reserva);
-        return reserva;
-
+        return true;
     }
 
-    public boolean cancelarReserva(SalaReuniao salaReuniao, LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
-
-        Reserva reserva = new Reserva();
-        reserva.setDataReserva(dataReserva);
-        reserva.setHoraInicio(horaInicio);
-        reserva.setHoraFim(horaFim);
-        reserva.setCodigoSalaReuniao(salaReuniao.getCodigo());
-        reserva.setCodigoPredio(salaReuniao.getCodigoPredio());
-        reserva.setCodigoCampus(salaReuniao.getCodigoCampus());
-        return BancoDeDados.excluiReserva(reserva);
-    }
-
-    public boolean gerarReservaEquipamento(Equipamento equipamento, int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
-            LocalTime horaInicio, LocalTime horaFim) throws Exception {
-        if (!BancoDeDados.consultaEquipamento(equipamento)) {
-            throw new Exception("Equipamento não cadastrado.");
-        }
-
-        ItemEquipamento ItemEquipamento = new ItemEquipamento();
-        ItemEquipamento.setCodigoEquipamento(equipamento.getCodigo());
-        ItemEquipamento.setDataReserva(dataReserva);
-        ItemEquipamento.setHoraInicio(horaInicio);
-        ItemEquipamento.setHoraFim(horaFim);
-        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
-        ItemEquipamento.setCodigoPredio(codigoPredio);
-        ItemEquipamento.setCodigoCampus(equipamento.getCodigoCampus());
-
-//data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
-//data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
-//data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
-        ArrayList<ItemEquipamento> ItemEquipamentos = BancoDeDados.listaItemEquipamento(equipamento.getCodigoCampus());
-        for (ItemEquipamento c : ItemEquipamentos) {
-            if (c.getCodigoEquipamento() == equipamento.getCodigo()
-                    && c.getCodigoSalaReuniao() == codigoSalaReuniao
-                    && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == equipamento.getCodigoCampus()) {
-                if (ItemEquipamento.getDataReserva().compareTo(c.getDataReserva()) == 0) {
-                    if ((ItemEquipamento.getHoraInicio().compareTo(c.getHoraInicio()) == 0
-                            && ItemEquipamento.getHoraFim().compareTo(c.getHoraFim()) == 0)) {
-                        throw new Exception("Equipamento já incluido nessa reserva");
+    public boolean cancelarReserva() throws Exception {
+//ArrayList<ItemEquipamento> listaItemEquipamento(int codigoCampus)
+        ArrayList<ItemEquipamento> itemEquipamentos
+                = BancoDeDados.listaItemEquipamento(reserva.getSalaReuniao().getPredio().getCampus().getCodigo());
+        for (ItemEquipamento c : itemEquipamentos) {
+            if (c.getSalaReuniao() == reserva.getSalaReuniao()) {
+                if (c.getEquipamento()==itemEquipamento.getEquipamento()){
+                    
+                }
+                if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
+                    if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
+                            && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
+                            || (reserva.getHoraFim().compareTo(c.getHoraInicio()) >= 0
+                            && reserva.getHoraFim().compareTo(c.getHoraFim()) <= 0)) {
+                        throw new Exception("Sala já reserva nesse horário");
                     }
                 }
             }
         }
-        BancoDeDados.gravaItemEquipamento(ItemEquipamento);
-        return true;
 
+        return BancoDeDados.excluiReserva(reserva);
     }
+//
+//    public boolean gerarReservaEquipamento(Equipamento equipamento, int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
+//            LocalTime horaInicio, LocalTime horaFim) throws Exception {
+//        if (!BancoDeDados.consultaEquipamento(equipamento)) {
+//            throw new Exception("Equipamento não cadastrado.");
+//        }
+//
+//        ItemEquipamento ItemEquipamento = new ItemEquipamento();
+//        ItemEquipamento.setCodigoEquipamento(equipamento.getCodigo());
+//        ItemEquipamento.setDataReserva(dataReserva);
+//        ItemEquipamento.setHoraInicio(horaInicio);
+//        ItemEquipamento.setHoraFim(horaFim);
+//        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
+//        ItemEquipamento.setCodigoPredio(codigoPredio);
+//        ItemEquipamento.setCodigoCampus(equipamento.getCodigoCampus());
+//
+////data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
+////data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
+////data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
+//        ArrayList<ItemEquipamento> ItemEquipamentos = BancoDeDados.listaItemEquipamento(equipamento.getCodigoCampus());
+//        for (ItemEquipamento c : ItemEquipamentos) {
+//            if (c.getCodigoEquipamento() == equipamento.getCodigo()
+//                    && c.getCodigoSalaReuniao() == codigoSalaReuniao
+//                    && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == equipamento.getCodigoCampus()) {
+//                if (ItemEquipamento.getDataReserva().compareTo(c.getDataReserva()) == 0) {
+//                    if ((ItemEquipamento.getHoraInicio().compareTo(c.getHoraInicio()) == 0
+//                            && ItemEquipamento.getHoraFim().compareTo(c.getHoraFim()) == 0)) {
+//                        throw new Exception("Equipamento já incluido nessa reserva");
+//                    }
+//                }
+//            }
+//        }
+//        BancoDeDados.gravaItemEquipamento(ItemEquipamento);
+//        return true;
+//
+//    }
+//
+//    public boolean cancelarReservaEquipamento(Equipamento equipamento, int codigoPredio, int codigoSalaReuniao,
+//            LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
+//
+//        ItemEquipamento ItemEquipamento = new ItemEquipamento();
+//        ItemEquipamento.setCodigoEquipamento(equipamento.getCodigo());
+//        ItemEquipamento.setDataReserva(dataReserva);
+//        ItemEquipamento.setHoraInicio(horaInicio);
+//        ItemEquipamento.setHoraFim(horaFim);
+//        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
+//        ItemEquipamento.setCodigoPredio(codigoPredio);
+//        ItemEquipamento.setCodigoCampus(equipamento.getCodigoCampus());
+//        return BancoDeDados.excluiItemEquipamento(ItemEquipamento);
+//    }
 
-    public boolean cancelarReservaEquipamento(Equipamento equipamento, int codigoPredio, int codigoSalaReuniao,
-            LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
-
-        ItemEquipamento ItemEquipamento = new ItemEquipamento();
-        ItemEquipamento.setCodigoEquipamento(equipamento.getCodigo());
-        ItemEquipamento.setDataReserva(dataReserva);
-        ItemEquipamento.setHoraInicio(horaInicio);
-        ItemEquipamento.setHoraFim(horaFim);
-        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
-        ItemEquipamento.setCodigoPredio(codigoPredio);
-        ItemEquipamento.setCodigoCampus(equipamento.getCodigoCampus());
-        return BancoDeDados.excluiItemEquipamento(ItemEquipamento);
-    }
-
+//    
 }

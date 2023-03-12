@@ -27,24 +27,13 @@ import java.util.Objects;
  */
 public class ItemEquipamento {
 
-    private int codigoEquipamento;
     private LocalDate dataReserva;
     private LocalTime horaInicio;
     private LocalTime horaFim;
-    private int codigoSalaReuniao;
-    private int codigoPredio;
-    private int codigoCampus;
-    private String nomeEquipamento;
+    private SalaReuniao salaReuniao = new SalaReuniao();
+    private Equipamento equipamento = new Equipamento();
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
-
-    public int getCodigoEquipamento() {
-        return codigoEquipamento;
-    }
-
-    public void setCodigoEquipamento(int codigoEquipamento) {
-        this.codigoEquipamento = codigoEquipamento;
-    }
 
     public LocalDate getDataReserva() {
         return dataReserva;
@@ -70,52 +59,35 @@ public class ItemEquipamento {
         this.horaFim = horaFim;
     }
 
-    public int getCodigoSalaReuniao() {
-        return codigoSalaReuniao;
+    public SalaReuniao getSalaReuniao() {
+        return salaReuniao;
     }
 
-    public void setCodigoSalaReuniao(int codigoSalaReuniao) {
-        this.codigoSalaReuniao = codigoSalaReuniao;
+    public void setSalaReuniao(SalaReuniao salaReuniao) {
+        this.salaReuniao = salaReuniao;
     }
 
-    public int getCodigoPredio() {
-        return codigoPredio;
+    public Equipamento getEquipamento() {
+        return equipamento;
     }
 
-    public void setCodigoPredio(int codigoPredio) {
-        this.codigoPredio = codigoPredio;
+    public void setEquipamento(Equipamento equipamento) {
+        this.equipamento = equipamento;
     }
 
-    public int getCodigoCampus() {
-        return codigoCampus;
-    }
-
-    public void setCodigoCampus(int codigoCampus) {
-        this.codigoCampus = codigoCampus;
-    }
-
-    public String getNomeEquipamento() {
-        return nomeEquipamento;
-    }
-
-    public void setNomeEquipamento(String nomeEquipamento) {
-        this.nomeEquipamento = nomeEquipamento;
-    }
-
+    
+    
 //</editor-fold>
     
-    
-    
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + this.codigoEquipamento;
-        hash = 29 * hash + Objects.hashCode(this.dataReserva);
-        hash = 29 * hash + Objects.hashCode(this.horaInicio);
-        hash = 29 * hash + Objects.hashCode(this.horaFim);
-        hash = 29 * hash + this.codigoSalaReuniao;
-        hash = 29 * hash + this.codigoPredio;
-        hash = 29 * hash + this.codigoCampus;
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.dataReserva);
+        hash = 71 * hash + Objects.hashCode(this.horaInicio);
+        hash = 71 * hash + Objects.hashCode(this.horaFim);
+        hash = 71 * hash + Objects.hashCode(this.salaReuniao);
+        hash = 71 * hash + Objects.hashCode(this.equipamento);
         return hash;
     }
 
@@ -130,27 +102,8 @@ public class ItemEquipamento {
         if (getClass() != obj.getClass()) {
             return false;
         }
-//        final ItemEquipamentoReserva other = (ItemEquipamentoReserva) obj;
-//        if (this.codigoEquipamento != other.codigoEquipamento) {
-//            return false;
-//        }
-//        if (this.codigoSala != other.codigoSala) {
-//            return false;
-//        }
-//        if (this.codigoPredio != other.codigoPredio) {
-//            return false;
-//        }
-//        if (this.codigoCampus != other.codigoCampus) {
-//            return false;
-//        }
-//        if (!Objects.equals(this.dataReserva, other.dataReserva)) {
-//            return false;
-//        }
-//        if (!Objects.equals(this.horaInicio, other.horaInicio)) {
-//            return false;
-//        }
-//        return Objects.equals(this.horaFim, other.horaFim);
         return hashCode() == obj.hashCode();
+
     }
 
 }

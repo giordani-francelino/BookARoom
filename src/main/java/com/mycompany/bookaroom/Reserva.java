@@ -30,11 +30,12 @@ public class Reserva {
     private LocalDate dataReserva;
     private LocalTime horaInicio;
     private LocalTime horaFim;
-    private int codigoSalaReuniao;
-    private int codigoPredio;
-    private int codigoCampus;
+//    private int codigoSalaReuniao;
+//    private int codigoPredio;
+//    private int codigoCampus;
     private String assunto;
-    private Funcionario funcionario;
+    private SalaReuniao salaReuniao = new SalaReuniao();
+    private Funcionario funcionario = new Funcionario();
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
     public LocalDate getDataReserva() {
@@ -60,38 +61,20 @@ public class Reserva {
     public void setHoraFim(LocalTime horaFim) {
         this.horaFim = horaFim;
     }
-
-    public int getCodigoSalaReuniao() {
-        return codigoSalaReuniao;
-    }
-
-    public void setCodigoSalaReuniao(int codigoSala) {
-        this.codigoSalaReuniao = codigoSala;
-    }
-
-    public int getCodigoPredio() {
-        return codigoPredio;
-        
-    }
-
-    public void setCodigoPredio(int codigoPredio) {
-        this.codigoPredio = codigoPredio;
-    }
-
-    public int getCodigoCampus() {
-        return codigoCampus;
-    }
-
-    public void setCodigoCampus(int codigoCampus) {
-        this.codigoCampus = codigoCampus;
-    }
-
     public String getAssunto() {
         return assunto;
     }
 
     public void setAssunto(String assunto) {
         this.assunto = assunto;
+    }
+
+    public SalaReuniao getSalaReuniao() {
+        return salaReuniao;
+    }
+
+    public void setSalaReuniao(SalaReuniao salaReuniao) {
+        this.salaReuniao = salaReuniao;
     }
 
     public Funcionario getFuncionario() {
@@ -106,32 +89,22 @@ public class Reserva {
     
     //</editor-fold>
 
-    public boolean inserirItemEquipamento(Equipamento equipamento) {
-        return false;
-    }
-
-    public boolean excluirItemEquipamento(Equipamento equipamento) {
-        return false;
-    }
-
     @Override
     public String toString() {
         return "Reserva{" + "Data=" + dataReserva + ", Hora início=" + horaInicio 
-                + ", Hora fim=" + horaFim + ", Sala=" + codigoSalaReuniao 
-                + ", Predio=" + codigoPredio + ", Campus=" + codigoCampus 
+                + ", Hora fim=" + horaFim + ", Sala=" + this.getSalaReuniao().getCodigo() 
+                + ", Predio=" + this.getSalaReuniao().getPredio().getCodigo()
+                + ", Campus=" + this.getSalaReuniao().getPredio().getCampus().getCodigo() 
                 + ", Assunto=" + assunto + ", " + funcionario + '}';
     }
 
-
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 5;
         hash = 37 * hash + Objects.hashCode(this.dataReserva);
         hash = 37 * hash + Objects.hashCode(this.horaInicio);
         hash = 37 * hash + Objects.hashCode(this.horaFim);
-        hash = 37 * hash + this.codigoSalaReuniao;
-        hash = 37 * hash + this.codigoPredio;
-        hash = 37 * hash + this.codigoCampus;
+        hash = 37 * hash + Objects.hashCode(this.salaReuniao);
         return hash;
     }
 
@@ -147,23 +120,18 @@ public class Reserva {
             return false;
         }
 //        final Reserva other = (Reserva) obj;
-//        if (this.codigoSala != other.codigoSala) {
-//            return false;
-//        }
-//        if (this.codigoPredio != other.codigoPredio) {
-//            return false;
-//        }
-//        if (this.codigoCampus != other.codigoCampus) {
-//            return false;
-//        }
 //        if (!Objects.equals(this.dataReserva, other.dataReserva)) {
 //            return false;
 //        }
 //        if (!Objects.equals(this.horaInicio, other.horaInicio)) {
 //            return false;
 //        }
-//        return Objects.equals(this.horaFim, other.horaFim);
+//        if (!Objects.equals(this.horaFim, other.horaFim)) {
+//            return false;
+//        }
+//        return Objects.equals(this.salaReuniao, other.salaReuniao);
         return hashCode() == obj.hashCode();
     }
+
 
 }

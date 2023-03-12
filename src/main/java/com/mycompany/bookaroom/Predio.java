@@ -17,31 +17,35 @@
  */
 package com.mycompany.bookaroom;
 
+import java.util.Objects;
+
 /**
  *
  * @author Your Name &lt;francelino at ifnmg&gt;
  */
 public class Predio {
     private int codigo;
-    private int codigoCampus;
+//    private int codigoCampus;
+    private Campus campus = new Campus();
     private String nome;
 
 //<editor-fold defaultstate="collapsed" desc="getters and setters">
-    
+
     public int getCodigo() {
         return codigo;
     }
-    
+
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
     
-    public int getCodigoCampus() {
-        return codigoCampus;
+
+    public Campus getCampus() {
+        return campus;
     }
-    
-    public void setCodigoCampus(int codigoCampus) {
-        this.codigoCampus = codigoCampus;
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
     
     public String getNome() {
@@ -55,10 +59,15 @@ public class Predio {
 //</editor-fold>
 
     @Override
+    public String toString() {
+        return "Predio{" + "codigo=" + codigo + ", campus=" + campus + ", nome=" + nome + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + this.codigo;
-        hash = 89 * hash + this.codigoCampus;
+        hash = 71 * hash + this.codigo;
+        hash = 71 * hash + Objects.hashCode(this.campus);
         return hash;
     }
 
@@ -77,9 +86,8 @@ public class Predio {
 //        if (this.codigo != other.codigo) {
 //            return false;
 //        }
-//        return this.codigoCampus == other.codigoCampus;
+//        return Objects.equals(this.campus, other.campus);
         return hashCode() == obj.hashCode();
-
     }
-    
+
 }

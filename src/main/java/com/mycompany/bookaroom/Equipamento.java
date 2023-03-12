@@ -20,6 +20,7 @@ package com.mycompany.bookaroom;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 public class Equipamento {
 
     private int codigo;
-    private int codigoCampus;
+    private Campus campus = new Campus();
     private String nome;
     private int patrimonio;
 
@@ -41,12 +42,12 @@ public class Equipamento {
         this.codigo = codigo;
     }
 
-    public int getCodigoCampus() {
-        return codigoCampus;
+    public Campus getCampus() {
+        return campus;
     }
 
-    public void setCodigoCampus(int codigoCampus) {
-        this.codigoCampus = codigoCampus;
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
 
     public String getNome() {
@@ -67,61 +68,11 @@ public class Equipamento {
 
 //</editor-fold>
 
-    public boolean gerarReservaEquipamento(int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
-            LocalTime horaInicio, LocalTime horaFim, int codigoFuncionario) throws Exception {
-        if (!BancoDeDados.consultaEquipamento(this)) {
-            throw new Exception("Equipamento não cadastrado.");
-        }
-
-        ItemEquipamento ItemEquipamento = new ItemEquipamento();
-        ItemEquipamento.setCodigoEquipamento(codigo);
-        ItemEquipamento.setDataReserva(dataReserva);
-        ItemEquipamento.setHoraInicio(horaInicio);
-        ItemEquipamento.setHoraFim(horaFim);
-        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
-        ItemEquipamento.setCodigoPredio(codigoPredio);
-        ItemEquipamento.setCodigoCampus(codigoCampus);
-
-//data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
-//data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
-//data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
-        ArrayList<ItemEquipamento> ItemEquipamentos = BancoDeDados.listaItemEquipamento(codigoCampus);
-        for (ItemEquipamento c : ItemEquipamentos) {
-            if (c.getCodigoEquipamento() == codigo
-                    && c.getCodigoSalaReuniao() == codigoSalaReuniao
-                    && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == codigoCampus) {
-                if (ItemEquipamento.getDataReserva().compareTo(c.getDataReserva()) == 0) {
-                    if ((ItemEquipamento.getHoraInicio().compareTo(c.getHoraInicio()) == 0
-                            && ItemEquipamento.getHoraFim().compareTo(c.getHoraFim()) == 0)) {
-                        throw new Exception("Equipamento já incluido nessa reserva");
-                    }
-                }
-            }
-        }
-        BancoDeDados.gravaItemEquipamento(ItemEquipamento);
-        return true;
-
-    }
-
-    public boolean cancelarReservaEquipamento(int codigoPredio, int codigoSalaReuniao,
-            LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
-
-        ItemEquipamento ItemEquipamento = new ItemEquipamento();
-        ItemEquipamento.setCodigoEquipamento(codigo);
-        ItemEquipamento.setDataReserva(dataReserva);
-        ItemEquipamento.setHoraInicio(horaInicio);
-        ItemEquipamento.setHoraFim(horaFim);
-        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
-        ItemEquipamento.setCodigoPredio(codigoPredio);
-        ItemEquipamento.setCodigoCampus(codigoCampus);
-        return BancoDeDados.excluiItemEquipamento(ItemEquipamento);
-    }
-
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 29 * hash + this.codigo;
-        hash = 29 * hash + this.codigoCampus;
+        hash = 47 * hash + this.codigo;
+        hash = 47 * hash + Objects.hashCode(this.campus);
         return hash;
     }
 
@@ -140,9 +91,9 @@ public class Equipamento {
 //        if (this.codigo != other.codigo) {
 //            return false;
 //        }
-//        return this.codigoCampus == other.codigoCampus;
+//        return Objects.equals(this.campus, other.campus);
         return hashCode() == obj.hashCode();
-
     }
+
 
 }

@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 public class BookARoom {
 
     private static BancoDeDados bd = new BancoDeDados();
-    private static BancoDeDados bd1 = new BancoDeDados();
     private static Equipamento equipamento = new Equipamento();
+    private static Funcionario funcionario = new Funcionario();
     private static SalaReuniao salaReuniao = new SalaReuniao();
     private static RegistradorReserva registradorReserva = new RegistradorReserva();
     private static Reserva reserva = new Reserva();
@@ -32,7 +32,7 @@ public class BookARoom {
 
     public static void main(String[] args) {
 
-        int funcionario = 1;
+        funcionario.setCodigo(1);
 
         String s;
 //        Scanner sc = new Scanner(System.in);
@@ -44,17 +44,15 @@ public class BookARoom {
 //        campus = Integer.parseInt(s);
 //        System.out.print("Digite o codigo do Funcionário:\n");
 //        s = sc.next();
-//        funcionario = Integer.parseInt(s);
-        Funcionario f = new Funcionario();
-        f.setCodigo(funcionario);
-        f.setCodigoCampus(campus);
+//        funcionario.setCodigo(Integer.parseInt(s));
+        funcionario.getCampus().setCodigo(campus);
         try {
-            f = BancoDeDados.recuperaFuncionario(funcionario, campus);
+            funcionario = BancoDeDados.recuperaFuncionario(funcionario.getCodigo(), campus);
         } catch (Exception ex) {
             System.out.println("Funcionário não cadstrado.");
             return;
         }
-        System.out.println(f.getNome());
+        System.out.println(funcionario.getNome());
 
 //        if (!BancoDeDados.consultaFuncionario(f)) {
 //            System.out.println("Funcionário não cadstrado.");
@@ -78,10 +76,10 @@ public class BookARoom {
                 String assunto;
                 System.out.print("Digite o assunto da reserva:\n");
                 assunto = sc.next();
+                reserva.setAssunto(assunto);
                 try {
-                    registradorReserva.setSalaReuniao(salaReuniao);
-                    registradorReserva.setFuncionario(f);
-                    reserva = registradorReserva.gerarReserva( dataReserva, horaInicio, horaFim, assunto);
+                    registradorReserva.setReserva(reserva);
+                    registradorReserva.gerarReserva();
                     System.out.print("Reserva gravada com sucesso.\n");
                     System.out.println(reserva + "\n");
                 } catch (Exception ex) {
@@ -92,7 +90,8 @@ public class BookARoom {
                 obterDadosReserva();
 
                 try {
-                    registradorReserva.cancelarReserva(salaReuniao,dataReserva, horaInicio, horaFim);
+                    registradorReserva.setReserva(reserva);
+                    registradorReserva.cancelarReserva();
                     System.out.println("Reserva cancelada com sucesso\n");
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
@@ -146,8 +145,13 @@ public class BookARoom {
         s = sc.next();
         horaFim = LocalTime.parse(s);
         salaReuniao.setCodigo(codigoSalaReuniao);
-        salaReuniao.setCodigoPredio(codigoPredio);
-        salaReuniao.setCodigoCampus(campus);
+        salaReuniao.getPredio().setCodigo(codigoPredio);
+        salaReuniao.getPredio().getCampus().setCodigo(campus);
+        reserva.setSalaReuniao(salaReuniao);
+        reserva.setDataReserva(dataReserva);
+        reserva.setHoraInicio(horaInicio);
+        reserva.setHoraFim(horaFim);
+        reserva.setFuncionario(funcionario);
     }
 
     public static void obterDadosEquipamento() {
@@ -157,7 +161,7 @@ public class BookARoom {
         s = sc.next();
         codigoEquipamento = Integer.parseInt(s);
         equipamento.setCodigo(codigoEquipamento);
-        equipamento.setCodigoCampus(campus);
+        equipamento.getCampus().setCodigo(campus);
     }
 
 }
