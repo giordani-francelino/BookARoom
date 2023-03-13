@@ -186,7 +186,7 @@ public class BookARoom {
                 try {
                     obterDadosEquipamento();
                     registradorReserva.cancelarReservaEquipamento();
-                    System.out.println("Equipamento inclido com sucesso.");
+                    System.out.println("Reserva de equipamento cancelada.");
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }

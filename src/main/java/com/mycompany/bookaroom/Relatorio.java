@@ -18,6 +18,8 @@
 package com.mycompany.bookaroom;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -25,8 +27,13 @@ import java.util.ArrayList;
  */
 public class Relatorio {
 
-    private static ArrayList<SalaReuniao> salaReuniaos = new ArrayList<SalaReuniao>();
-    private static ArrayList<Reserva> reservas = new ArrayList<Reserva>();
-    private static ArrayList<ItemEquipamento> itemEquipamentos=new ArrayList<ItemEquipamento>();
-    
+    private  List<SalaReuniao> salaReuniaos = new ArrayList<SalaReuniao>();
+    private  List<Reserva> reservas = new ArrayList<Reserva>();
+    private  List<ItemEquipamento> itemEquipamentos = new ArrayList<ItemEquipamento>();
+
+    public void reservasAtivas() {
+        Collections.sort(reservas);
+
+    }
+
 }
