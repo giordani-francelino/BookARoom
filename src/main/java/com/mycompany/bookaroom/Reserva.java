@@ -25,14 +25,11 @@ import java.util.Objects;
  *
  * @author Your Name &lt;francelino at ifnmg&gt;
  */
-public class Reserva {
+public class Reserva implements Comparable<Reserva> {
 
     private LocalDate dataReserva;
     private LocalTime horaInicio;
     private LocalTime horaFim;
-//    private int codigoSalaReuniao;
-//    private int codigoPredio;
-//    private int codigoCampus;
     private String assunto;
     private SalaReuniao salaReuniao = new SalaReuniao();
     private Funcionario funcionario = new Funcionario();
@@ -61,6 +58,7 @@ public class Reserva {
     public void setHoraFim(LocalTime horaFim) {
         this.horaFim = horaFim;
     }
+
     public String getAssunto() {
         return assunto;
     }
@@ -85,16 +83,13 @@ public class Reserva {
         this.funcionario = funcionario;
     }
 
-
-    
     //</editor-fold>
-
     @Override
     public String toString() {
-        return "Reserva{" + "Data=" + dataReserva + ", Hora início=" + horaInicio 
-                + ", Hora fim=" + horaFim + ", Sala=" + this.getSalaReuniao().getCodigo() 
+        return "Reserva{" + "Data=" + dataReserva + ", Hora início=" + horaInicio
+                + ", Hora fim=" + horaFim + ", Sala=" + this.getSalaReuniao().getCodigo()
                 + ", Predio=" + this.getSalaReuniao().getPredio().getCodigo()
-                + ", Campus=" + this.getSalaReuniao().getPredio().getCampus().getCodigo() 
+                + ", Campus=" + this.getSalaReuniao().getPredio().getCampus().getCodigo()
                 + ", Assunto=" + assunto + ", " + funcionario + '}';
     }
 
@@ -133,5 +128,23 @@ public class Reserva {
         return hashCode() == obj.hashCode();
     }
 
+    @Override
+    public int compareTo(Reserva outraReserva) {
+        if (this.dataReserva.compareTo(outraReserva.getDataReserva()) > 0) {
+            return -1;
+        }
+        if (this.dataReserva.compareTo(outraReserva.getDataReserva()) < 0) {
+            return 1;
+        }
+        if (this.horaInicio.compareTo(outraReserva.getHoraInicio()) > 0) {
+            return -1;
+        }
+        if (this.horaInicio.compareTo(outraReserva.getHoraInicio()) < 0) {
+            return 1;
+        }
+
+        return 0;
+
+    }
 
 }

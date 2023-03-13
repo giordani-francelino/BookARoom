@@ -27,44 +27,16 @@ import java.util.Objects;
  */
 public class ItemEquipamento {
 
-    private LocalDate dataReserva;
-    private LocalTime horaInicio;
-    private LocalTime horaFim;
-    private SalaReuniao salaReuniao = new SalaReuniao();
+    private Reserva reserva = new Reserva();
     private Equipamento equipamento = new Equipamento();
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
-
-    public LocalDate getDataReserva() {
-        return dataReserva;
+    public Reserva getReserva() {
+        return reserva;
     }
 
-    public void setDataReserva(LocalDate dataReserva) {
-        this.dataReserva = dataReserva;
-    }
-
-    public LocalTime getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(LocalTime horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
-    public LocalTime getHoraFim() {
-        return horaFim;
-    }
-
-    public void setHoraFim(LocalTime horaFim) {
-        this.horaFim = horaFim;
-    }
-
-    public SalaReuniao getSalaReuniao() {
-        return salaReuniao;
-    }
-
-    public void setSalaReuniao(SalaReuniao salaReuniao) {
-        this.salaReuniao = salaReuniao;
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
     public Equipamento getEquipamento() {
@@ -75,19 +47,18 @@ public class ItemEquipamento {
         this.equipamento = equipamento;
     }
 
-    
-    
 //</editor-fold>
-    
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.dataReserva);
-        hash = 71 * hash + Objects.hashCode(this.horaInicio);
-        hash = 71 * hash + Objects.hashCode(this.horaFim);
-        hash = 71 * hash + Objects.hashCode(this.salaReuniao);
-        hash = 71 * hash + Objects.hashCode(this.equipamento);
+        hash = 71 * hash + Objects.hashCode(this.getReserva().getDataReserva());
+        hash = 71 * hash + Objects.hashCode(this.getReserva().getHoraInicio());
+        hash = 71 * hash + Objects.hashCode(this.getReserva().getHoraFim());
+        hash = 71 * hash + Objects.hashCode(this.getReserva().getSalaReuniao().getCodigo());
+        hash = 71 * hash + Objects.hashCode(this.getReserva().getSalaReuniao().getPredio().getCodigo());
+        hash = 71 * hash + Objects.hashCode(this.getReserva().getSalaReuniao().getPredio().getCampus().getCodigo());
+        hash = 71 * hash + Objects.hashCode(this.getEquipamento().getCodigo());
+        hash = 71 * hash + Objects.hashCode(this.getEquipamento().getCampus().getCodigo());
         return hash;
     }
 

@@ -30,6 +30,7 @@ public class RegistradorReserva {
     private Reserva reserva = new Reserva();
     private ItemEquipamento itemEquipamento = new ItemEquipamento();
 
+//<editor-fold defaultstate="collapsed" desc="geters and setters">
     public Reserva getReserva() {
         return reserva;
 
@@ -43,7 +44,6 @@ public class RegistradorReserva {
         return itemEquipamento;
     }
 
-//<editor-fold defaultstate="collapsed" desc="geters and setters">
     public void setItemEquipamento(ItemEquipamento itemEquipamento) {
         this.itemEquipamento = itemEquipamento;
     }
@@ -80,73 +80,42 @@ public class RegistradorReserva {
         ArrayList<ItemEquipamento> itemEquipamentos
                 = BancoDeDados.listaItemEquipamento(reserva.getSalaReuniao().getPredio().getCampus().getCodigo());
         for (ItemEquipamento c : itemEquipamentos) {
-            if (c.getSalaReuniao() == reserva.getSalaReuniao()) {
-                if (c.getEquipamento()==itemEquipamento.getEquipamento()){
-                    
-                }
-                if (reserva.getDataReserva().compareTo(c.getDataReserva()) == 0) {
-                    if ((reserva.getHoraInicio().compareTo(c.getHoraInicio()) >= 0
-                            && reserva.getHoraInicio().compareTo(c.getHoraFim()) <= 0)
-                            || (reserva.getHoraFim().compareTo(c.getHoraInicio()) >= 0
-                            && reserva.getHoraFim().compareTo(c.getHoraFim()) <= 0)) {
-                        throw new Exception("Sala já reserva nesse horário");
-                    }
-                }
+            if (c.getReserva() == reserva) {
+                BancoDeDados.excluiItemEquipamento(c);
             }
         }
 
         return BancoDeDados.excluiReserva(reserva);
     }
-//
-//    public boolean gerarReservaEquipamento(Equipamento equipamento, int codigoPredio, int codigoSalaReuniao, LocalDate dataReserva,
-//            LocalTime horaInicio, LocalTime horaFim) throws Exception {
-//        if (!BancoDeDados.consultaEquipamento(equipamento)) {
-//            throw new Exception("Equipamento não cadastrado.");
-//        }
-//
-//        ItemEquipamento ItemEquipamento = new ItemEquipamento();
-//        ItemEquipamento.setCodigoEquipamento(equipamento.getCodigo());
-//        ItemEquipamento.setDataReserva(dataReserva);
-//        ItemEquipamento.setHoraInicio(horaInicio);
-//        ItemEquipamento.setHoraFim(horaFim);
-//        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
-//        ItemEquipamento.setCodigoPredio(codigoPredio);
-//        ItemEquipamento.setCodigoCampus(equipamento.getCodigoCampus());
-//
-////data1.compareTo(date2); //data1 < data2, retorna um valor menor que 0
-////data2.compareTo(date1); //data2 > data1, retorna um valor maior que 0
-////data1.compareTo(date3); //data1 = data3, então um 0 será mostrado no console
-//        ArrayList<ItemEquipamento> ItemEquipamentos = BancoDeDados.listaItemEquipamento(equipamento.getCodigoCampus());
-//        for (ItemEquipamento c : ItemEquipamentos) {
-//            if (c.getCodigoEquipamento() == equipamento.getCodigo()
-//                    && c.getCodigoSalaReuniao() == codigoSalaReuniao
-//                    && c.getCodigoPredio() == codigoPredio && c.getCodigoCampus() == equipamento.getCodigoCampus()) {
-//                if (ItemEquipamento.getDataReserva().compareTo(c.getDataReserva()) == 0) {
-//                    if ((ItemEquipamento.getHoraInicio().compareTo(c.getHoraInicio()) == 0
-//                            && ItemEquipamento.getHoraFim().compareTo(c.getHoraFim()) == 0)) {
-//                        throw new Exception("Equipamento já incluido nessa reserva");
-//                    }
-//                }
-//            }
-//        }
-//        BancoDeDados.gravaItemEquipamento(ItemEquipamento);
-//        return true;
-//
-//    }
-//
-//    public boolean cancelarReservaEquipamento(Equipamento equipamento, int codigoPredio, int codigoSalaReuniao,
-//            LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim) throws Exception {
-//
-//        ItemEquipamento ItemEquipamento = new ItemEquipamento();
-//        ItemEquipamento.setCodigoEquipamento(equipamento.getCodigo());
-//        ItemEquipamento.setDataReserva(dataReserva);
-//        ItemEquipamento.setHoraInicio(horaInicio);
-//        ItemEquipamento.setHoraFim(horaFim);
-//        ItemEquipamento.setCodigoSalaReuniao(codigoSalaReuniao);
-//        ItemEquipamento.setCodigoPredio(codigoPredio);
-//        ItemEquipamento.setCodigoCampus(equipamento.getCodigoCampus());
-//        return BancoDeDados.excluiItemEquipamento(ItemEquipamento);
-//    }
+
+    public boolean gerarReservaEquipamento() throws Exception {
+        if (!BancoDeDados.consultaEquipamento(itemEquipamento.getEquipamento())) {
+            throw new Exception("Equipamento não cadastrado.");
+        }
+        if (!BancoDeDados.consultaReserva(itemEquipamento.getReserva())) {
+            throw new Exception("Reserva não cadastrada.");
+        }
+        ArrayList<ItemEquipamento> itemEquipamentos
+                = BancoDeDados.listaItemEquipamento(reserva.getSalaReuniao().getPredio().getCampus().getCodigo());
+        for (ItemEquipamento c : itemEquipamentos) {
+            if (c.getReserva().getDataReserva().compareTo(itemEquipamento.getReserva().getDataReserva()) == 0) {
+                if ((itemEquipamento.getReserva().getHoraInicio().compareTo(c.getReserva().getHoraInicio()) >= 0
+                        && itemEquipamento.getReserva().getHoraInicio().compareTo(c.getReserva().getHoraFim()) <= 0)
+                        || (itemEquipamento.getReserva().getHoraFim().compareTo(c.getReserva().getHoraInicio()) >= 0
+                        && itemEquipamento.getReserva().getHoraFim().compareTo(c.getReserva().getHoraFim()) <= 0)) {
+                    throw new Exception("Equipamento já reservado nessa data/horário.");
+                    
+                }
+            }
+        }
+
+        return BancoDeDados.gravaItemEquipamento(itemEquipamento);
+    }
+
+    public boolean cancelarReservaEquipamento() throws Exception {
+
+        return BancoDeDados.excluiItemEquipamento(itemEquipamento);
+    }
 
 //    
 }

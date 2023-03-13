@@ -79,11 +79,9 @@ public class BancoDeDados {
                     }
                     
                     ItemEquipamento itemEquipamento = new ItemEquipamento();
+                    itemEquipamento.setReserva(reserva);
                     itemEquipamento.getEquipamento().setCodigo(item);
-                    itemEquipamento.setDataReserva(LocalDate.now());
-                    itemEquipamento.setHoraInicio(LocalTime.parse("11:00"));
-                    itemEquipamento.setHoraFim(LocalTime.parse("12:00"));
-                    itemEquipamento.setSalaReuniao(salaReuniao);
+                    itemEquipamento.getEquipamento().setCampus(campus);
                     itemEquipamento.getEquipamento().setNome("Equipamento " + item + " - Campus " + codigoCampus);
                     item++;
                     try {
@@ -473,7 +471,7 @@ public class BancoDeDados {
 
     public static boolean gravaItemEquipamento(ItemEquipamento itemEquipamento) throws Exception {
         if (consultaItemEquipamento(itemEquipamento)) {
-            throw new Exception("ItemEquipamento já cadastrado.");
+            throw new Exception("Equipamento já reservado para essa data/horário.");
         }
         itemEquipamentos.add(itemEquipamento);
         return true;
@@ -481,7 +479,8 @@ public class BancoDeDados {
 
     public static boolean excluiItemEquipamento(ItemEquipamento itemEquipamento) throws Exception {
         if (!consultaItemEquipamento(itemEquipamento)) {
-            throw new Exception("ItemEquipamento não cadastrado.");
+ 
+            throw new Exception("Equipamento não reservado para essa data/horário.");
         }
         for (Iterator<ItemEquipamento> iterator = itemEquipamentos.iterator(); iterator.hasNext();) {
             ItemEquipamento c = iterator.next();
@@ -498,12 +497,12 @@ public class BancoDeDados {
         for (Iterator<ItemEquipamento> iterator = itemEquipamentos.iterator(); iterator.hasNext();) {
             ItemEquipamento c = iterator.next();
             if (c.getEquipamento().getCodigo() == codigo
-                    && c.getSalaReuniao().getCodigo() == codigoSalaReuniao
-                    && c.getSalaReuniao().getPredio().getCodigo() == codigoPredio
-                    && c.getSalaReuniao().getPredio().getCampus().getCodigo() == codigoCampus
-                    && c.getDataReserva() == dataReserva
-                    && c.getHoraInicio() == horaInicio
-                    && c.getHoraFim() == horaFim) {
+                    && c.getReserva().getSalaReuniao().getCodigo() == codigoSalaReuniao
+                    && c.getReserva().getSalaReuniao().getPredio().getCodigo() == codigoPredio
+                    && c.getReserva().getSalaReuniao().getPredio().getCampus().getCodigo() == codigoCampus
+                    && c.getReserva().getDataReserva() == dataReserva
+                    && c.getReserva().getHoraInicio() == horaInicio
+                    && c.getReserva().getHoraFim() == horaFim) {
                 return c;
             }
         }

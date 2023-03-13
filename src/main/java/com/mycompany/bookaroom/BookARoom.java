@@ -21,6 +21,7 @@ public class BookARoom {
     private static SalaReuniao salaReuniao = new SalaReuniao();
     private static RegistradorReserva registradorReserva = new RegistradorReserva();
     private static Reserva reserva = new Reserva();
+    private static ItemEquipamento itemEquipamento = new ItemEquipamento();
     private static int codigoPredio = 0;
     private static int codigoSalaReuniao = 0;
     private static LocalDate dataReserva = LocalDate.now();
@@ -98,9 +99,9 @@ public class BookARoom {
                 }
 
             } else if (Integer.parseInt(s) == 5) {
-
-            } else if (Integer.parseInt(s) == 6) {
-
+                System.out.println("Digite os dados da reserva:\n");
+                obterDadosReserva();
+                registarEquipamentos();
             } else {
                 break;
             }
@@ -120,9 +121,16 @@ public class BookARoom {
         System.out.print("2 - Salas ocupadas\n");
         System.out.print("3 - Efetuar reserva\n");
         System.out.print("4 - Cancelar reserva\n");
-        System.out.print("5 - Reservar equipamento\n");
-        System.out.print("6 - Cancelar reserva de equipamento\n");
+        System.out.print("5 - Reserva de Equipamento...\n");
         System.out.print("0 - Sair\n");
+
+    }
+
+    public static void subMenu() {
+        System.out.print("Selecione uma das opções abaixo:\n");
+        System.out.print("1 - Reserva equipamento\n");
+        System.out.print("2 - Cancela reserva de equipamento\n");
+        System.out.print("0 - Retorna ao menu principal\n");
 
     }
 
@@ -154,6 +162,42 @@ public class BookARoom {
         reserva.setFuncionario(funcionario);
     }
 
+    public static void registarEquipamentos() {
+        String s;
+        if (!BancoDeDados.consultaReserva(reserva)) {
+            System.out.println("Reserva não cadastrada.");
+            return;
+        }
+
+        subMenu();
+        while (sc.hasNext()) {
+            s = sc.next();
+            if (Integer.parseInt(s) == 1) {
+                try {
+                    obterDadosEquipamento();
+                    registradorReserva.gerarReservaEquipamento();
+                    System.out.println("Equipamento reservado com sucesso");
+
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+            } else if (Integer.parseInt(s) == 2) {
+                try {
+                    obterDadosEquipamento();
+                    registradorReserva.cancelarReservaEquipamento();
+                    System.out.println("Equipamento inclido com sucesso.");
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            } else {
+                break;
+            }
+            subMenu();
+        }
+
+    }
+
     public static void obterDadosEquipamento() {
         String s;
 
@@ -162,6 +206,9 @@ public class BookARoom {
         codigoEquipamento = Integer.parseInt(s);
         equipamento.setCodigo(codigoEquipamento);
         equipamento.getCampus().setCodigo(campus);
+        itemEquipamento.setEquipamento(equipamento);
+        itemEquipamento.setReserva(reserva);
+        registradorReserva.setItemEquipamento(itemEquipamento);
     }
 
 }
