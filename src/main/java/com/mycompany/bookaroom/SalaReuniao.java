@@ -27,7 +27,7 @@ import java.util.Objects;
  *
  * @author Your Name &lt;francelino at ifnmg&gt;
  */
-public class SalaReuniao {
+public class SalaReuniao implements Comparable<SalaReuniao> {
 
     private int codigo;
     private Predio predio = new Predio();
@@ -90,6 +90,29 @@ public class SalaReuniao {
 //        }
 //        return Objects.equals(this.predio, other.predio);
         return hashCode() == obj.hashCode();
+    }
+
+    @Override
+    public int compareTo(SalaReuniao outraSala) {
+        if (this.getPredio().getCampus().getCodigo() > outraSala.getPredio().getCampus().getCodigo()){
+            return 1;
+        }
+        if (this.getPredio().getCampus().getCodigo() < outraSala.getPredio().getCampus().getCodigo()){
+            return -1;
+        }
+        if (this.getPredio().getCodigo() > outraSala.getPredio().getCodigo()){
+            return 1;
+        }
+        if (this.getPredio().getCodigo() < outraSala.getPredio().getCodigo()){
+            return -1;
+        }
+        if (this.getCodigo() > outraSala.getCodigo()){
+            return 1;
+        }
+        if (this.getCodigo() < outraSala.getCodigo()){
+            return -1;
+        }
+        return 0;
     }
 
 }

@@ -17,6 +17,8 @@
  */
 package com.mycompany.bookaroom;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,13 +29,44 @@ import java.util.List;
  */
 public class Relatorio {
 
-    private  List<SalaReuniao> salaReuniaos = new ArrayList<SalaReuniao>();
-    private  List<Reserva> reservas = new ArrayList<Reserva>();
-    private  List<ItemEquipamento> itemEquipamentos = new ArrayList<ItemEquipamento>();
+    private List<SalaReuniao> salaReuniaos = new ArrayList<SalaReuniao>();
+    private List<Reserva> reservas = new ArrayList<Reserva>();
+    private List<ItemEquipamento> itemEquipamentos = new ArrayList<ItemEquipamento>();
 
-    public void reservasAtivas() {
+    public List<Reserva> reservasAtivas(Campus campus) {
+        reservas = BancoDeDados.listaReserva(campus.getCodigo());
+        Collections.sort(reservas);
+        List<Reserva> r = new ArrayList<Reserva>();
+        for (Reserva c : reservas) {
+            if ((c.getDataReserva().compareTo(LocalDate.now()) == 0
+                    && c.getHoraFim().compareTo(LocalTime.now()) >= 0)
+                    || c.getDataReserva().compareTo(LocalDate.now()) > 0) {
+                r.add(c);
+            }
+        }
+
+        return r;
+    }
+
+    public List<Reserva> reservasInativas(Campus campus) {
+        reservas = BancoDeDados.listaReserva(campus.getCodigo());
         Collections.sort(reservas);
 
+        return reservas;
+    }
+
+    public List<SalaReuniao> salasLivres(Campus campus) {
+        salaReuniaos = BancoDeDados.listaSalaReuniao(campus.getCodigo());
+        Collections.sort(salaReuniaos);
+
+        return salaReuniaos;
+    }
+
+    public List<SalaReuniao> salasOcupadas(Campus campus) {
+        salaReuniaos = BancoDeDados.listaSalaReuniao(campus.getCodigo());
+        Collections.sort(salaReuniaos);
+
+        return salaReuniaos;
     }
 
 }
